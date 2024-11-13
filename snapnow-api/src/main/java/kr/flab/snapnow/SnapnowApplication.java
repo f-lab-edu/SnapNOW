@@ -9,5 +9,4 @@ public class SnapnowApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SnapnowApplication.class, args);
 	}
-
 }
