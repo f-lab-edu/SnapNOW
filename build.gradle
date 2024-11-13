@@ -34,6 +34,8 @@ subprojects {
 	dependencies {
 		compileOnly 'org.projectlombok:lombok'
 		annotationProcessor 'org.projectlombok:lombok'
+
+		implementation 'com.google.googlejavaformat:google-java-format:1.18.0'
 	}
 }
 
