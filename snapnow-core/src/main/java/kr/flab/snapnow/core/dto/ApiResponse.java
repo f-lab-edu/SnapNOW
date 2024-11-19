@@ -8,11 +8,12 @@ import lombok.ToString;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import kr.flab.snapnow.core.enums.ResultCode;
-import kr.flab.snapnow.core.enums.Success;
+import kr.flab.snapnow.core.enums.SuccessCode;
 
 @Getter
 @ToString
 public class ApiResponse<T> {
+
     private final ResultCode code;
     private final String message;
     private final T data;
@@ -28,8 +29,8 @@ public class ApiResponse<T> {
 
     public static <T> ApiResponse<T> success() {
         return new ApiResponse<>(
-            Success.SUCCESS,
-            Success.SUCCESS.getMessage(),
+            SuccessCode.SUCCESS,
+            SuccessCode.SUCCESS.getMessage(),
             null,
             null
         );
@@ -37,8 +38,8 @@ public class ApiResponse<T> {
 
     public static <T> ApiResponse<T> success(T data) {
         return new ApiResponse<>(
-            Success.SUCCESS,
-            Success.SUCCESS.getMessage(),
+            SuccessCode.SUCCESS,
+            SuccessCode.SUCCESS.getMessage(),
             data,
             null
         );
@@ -46,8 +47,8 @@ public class ApiResponse<T> {
 
     public static <T> ApiResponse<List<T>> success(List<T> data) {
         return new ApiResponse<>(
-            Success.SUCCESS,
-            Success.SUCCESS.getMessage(),
+            SuccessCode.SUCCESS,
+            SuccessCode.SUCCESS.getMessage(),
             data,
             null
         );
@@ -55,8 +56,8 @@ public class ApiResponse<T> {
 
     public static <T> ApiResponse<List<T>> success(PageResponse<T> data) {
         return new ApiResponse<>(  
-            Success.SUCCESS,
-            Success.SUCCESS.getMessage(),
+            SuccessCode.SUCCESS,
+            SuccessCode.SUCCESS.getMessage(),
             data.getContent(),
             data.getPageInfo()
         );
