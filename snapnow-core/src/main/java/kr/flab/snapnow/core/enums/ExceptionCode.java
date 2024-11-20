@@ -7,7 +7,8 @@ public enum ExceptionCode implements ResultCode {
     NO_PERMISSION("No permission"),
     NOT_FOUND("Resource not found"),
     INTERNAL_SERVER_ERROR("Internal server error"),
-    ILLEGAL_ARGUMENT("Illegal argument");
+    ILLEGAL_ARGUMENT("Illegal argument"),
+    TIMEOUT("Timeout");
 
     private final String message;
 
