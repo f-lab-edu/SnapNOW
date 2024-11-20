@@ -13,12 +13,20 @@ public class BadRequestException extends SnapnowException{
         super(resultCode);
     }
 
+    public BadRequestException(String message) {
+        super(ExceptionCode.BAD_REQUEST, message);
+    }
+
     public BadRequestException(ResultCode resultCode, String message) {
         super(resultCode, message);
     }
 
     public BadRequestException(ResultCode resultCode, Throwable cause) {
         super(resultCode, cause);
+    }
+
+    public BadRequestException(String message, Throwable cause) {
+        super(ExceptionCode.BAD_REQUEST, message, cause);
     }
 
     public BadRequestException(ResultCode resultCode, String message, Throwable cause) {

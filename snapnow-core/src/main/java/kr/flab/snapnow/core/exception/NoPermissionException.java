@@ -13,11 +13,23 @@ public class NoPermissionException extends SnapnowException {
         super(resultCode);
     }
 
+    public NoPermissionException(String message) {
+        super(ExceptionCode.NO_PERMISSION, message);
+    }
+
     public NoPermissionException(ResultCode resultCode, String message) {
         super(resultCode, message);
     }
 
     public NoPermissionException(ResultCode resultCode, Throwable cause) {
         super(resultCode, cause);
+    }
+
+    public NoPermissionException(String message, Throwable cause) {
+        super(ExceptionCode.NO_PERMISSION, message, cause);
+    }
+
+    public NoPermissionException(ResultCode resultCode, String message, Throwable cause) {
+        super(resultCode, message, cause);
     }
 }

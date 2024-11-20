@@ -13,12 +13,20 @@ public class UnAuthorizedException extends SnapnowException {
         super(resultCode);
     }
 
+    public UnAuthorizedException(String message) {
+        super(ExceptionCode.UNAUTHORIZED, message);
+    }
+
     public UnAuthorizedException(ResultCode resultCode, String message) {
         super(resultCode, message);
     }
 
     public UnAuthorizedException(ResultCode resultCode, Throwable cause) {
         super(resultCode, cause);
+    }
+
+    public UnAuthorizedException(String message, Throwable cause) {
+        super(ExceptionCode.UNAUTHORIZED, message, cause);
     }
 
     public UnAuthorizedException(ResultCode resultCode, String message, Throwable cause) {

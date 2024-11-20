@@ -12,6 +12,10 @@ public class IllegalArgumentException extends SnapnowException {
     public IllegalArgumentException(ResultCode resultCode) {
         super(resultCode);
     }
+    
+    public IllegalArgumentException(String message) {
+        super(ExceptionCode.ILLEGAL_ARGUMENT, message);
+    }
 
     public IllegalArgumentException(ResultCode resultCode, String message) {
         super(resultCode, message);
@@ -19,6 +23,10 @@ public class IllegalArgumentException extends SnapnowException {
 
     public IllegalArgumentException(ResultCode resultCode, Throwable cause) {
         super(resultCode, cause);
+    }
+
+    public IllegalArgumentException(String message, Throwable cause) {
+        super(ExceptionCode.ILLEGAL_ARGUMENT, message, cause);
     }
 
     public IllegalArgumentException(ResultCode resultCode, String message, Throwable cause) {
