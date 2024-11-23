@@ -4,34 +4,25 @@ import java.util.List;
 
 import lombok.Getter;
 import lombok.ToString;
+import lombok.RequiredArgsConstructor;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
+import kr.flab.snapnow.core.model.Page;
 import kr.flab.snapnow.core.enums.ResultCode;
 import kr.flab.snapnow.core.enums.SuccessCode;
 
 @Getter
 @ToString
+@RequiredArgsConstructor
 public class ApiResponse<T> {
 
     private final ResultCode code;
     private final String message;
     private final T data;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private final PageInfo pageInfo;
-
-    private ApiResponse(ResultCode code, String message, T data, PageInfo pageInfo) {
-        this.code = code;
-        this.message = message;
-        this.data = data;
-        this.pageInfo = pageInfo;
-    }
 
     public static <T> ApiResponse<T> success() {
         return new ApiResponse<>(
             SuccessCode.SUCCESS,
             SuccessCode.SUCCESS.getMessage(),
-            null,
             null
         );
     }
@@ -40,8 +31,7 @@ public class ApiResponse<T> {
         return new ApiResponse<>(
             SuccessCode.SUCCESS,
             SuccessCode.SUCCESS.getMessage(),
-            data,
-            null
+            data
         );
     }
 
@@ -49,17 +39,15 @@ public class ApiResponse<T> {
         return new ApiResponse<>(
             SuccessCode.SUCCESS,
             SuccessCode.SUCCESS.getMessage(),
-            data,
-            null
+            data
         );
     }
 
-    public static <T> ApiResponse<List<T>> success(PageResponse<T> data) {
+    public static <T> ApiResponse<Page<T>> success(Page<T> data) {
         return new ApiResponse<>(  
             SuccessCode.SUCCESS,
             SuccessCode.SUCCESS.getMessage(),
-            data.getContent(),
-            data.getPageInfo()
+            data
         );
     }
 
@@ -67,7 +55,6 @@ public class ApiResponse<T> {
         return new ApiResponse<>(
             code,
             code.getMessage(),
-            null,
             null
         );
     }
@@ -76,7 +63,6 @@ public class ApiResponse<T> {
         return new ApiResponse<>(
             code,
             message,
-            null,
             null
         );
     }
