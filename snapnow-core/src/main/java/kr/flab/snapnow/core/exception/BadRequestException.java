@@ -3,7 +3,7 @@ package kr.flab.snapnow.core.exception;
 import kr.flab.snapnow.core.enums.ResultCode;
 import kr.flab.snapnow.core.enums.ExceptionCode;
 
-public class BadRequestException extends SnapnowException{
+public class BadRequestException extends SnapnowException {
 
     public BadRequestException() {
         super(ExceptionCode.BAD_REQUEST);

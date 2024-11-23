@@ -27,6 +27,6 @@ public class SnapnowException extends RuntimeException {
     }
 
     public ResultCode getResultCode() {
-    return code;
+        return code;
     }
 }
