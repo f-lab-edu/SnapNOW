@@ -1,5 +1,10 @@
 package kr.flab.snapnow.core.enums;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
 public enum ExceptionCode implements ResultCode {
 
     BAD_REQUEST("Bad Request"),
@@ -11,13 +16,4 @@ public enum ExceptionCode implements ResultCode {
     TIMEOUT("Timeout");
 
     private final String message;
-
-    ExceptionCode(String message) {
-        this.message = message;
-    }
-
-    @Override
-    public String getMessage() {
-        return this.message;
-    }
 }
