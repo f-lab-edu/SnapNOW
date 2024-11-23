@@ -16,8 +16,14 @@ public abstract class BaseEntity {
     protected LocalDateTime createdAt;
     protected LocalDateTime updatedAt;
     protected LocalDateTime deletedAt;
+    protected String deletedReason;
 
-    public void setDeletedAt(LocalDateTime deletedAt) {
+    public void setDeleted(LocalDateTime deletedAt) {
         this.deletedAt = deletedAt;
+    }
+
+    public void setDeleted(LocalDateTime deletedAt, String deletedReason) {
+        this.deletedAt = deletedAt;
+        this.deletedReason = deletedReason;
     }
 }
