@@ -50,4 +50,32 @@ public class UserAccount {
             return this;
         }
     }
+
+    public void updatePassword(String password) {
+        this.password = password;
+    }
+
+    public void updateName(String name) {
+        this.name = name;
+    }
+
+    public void updateBirthDay(LocalDate birthDay) {
+        this.birthDay = birthDay;
+    }
+
+    public void updatePhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void updateGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public void updateLocale(Locale locale) {
+        this.locale = locale;
+    }
+
+    public void updateVerifiedEmail() {
+        this.verifiedEmail = true;
+    }
 }
