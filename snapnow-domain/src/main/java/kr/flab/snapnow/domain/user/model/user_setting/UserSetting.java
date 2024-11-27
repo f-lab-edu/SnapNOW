@@ -19,15 +19,6 @@ public abstract class UserSetting<
     protected SettingCategory category;
     protected Set<UserSettingElement<T, U>> settings;
 
-    public UserSetting(SettingCategory category) {
-        this.category = category;
-        this.settings = new HashSet<>();
-
-        this.category.getSettingType().forEach(settingType -> {
-            this.settings.add((UserSettingElement<T, U>) new UserSettingElement<>(settingType));
-        });
-    }
-
     public void updateSetting(UserSettingElement<T, U> setting) {
         this.settings.stream()
             .filter(s -> s.getSettingType().equals(setting.getSettingType()))
