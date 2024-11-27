@@ -1,4 +1,4 @@
-package kr.flab.snapnow.domain.user.model.userAccount;
+package kr.flab.snapnow.domain.user.domain.model.userAccount;
 
 import java.time.LocalDate;
 import java.util.Locale;
@@ -9,8 +9,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Builder;
 
-import kr.flab.snapnow.domain.user.enums.AuthProvider;
-import kr.flab.snapnow.domain.user.enums.Gender;
+import kr.flab.snapnow.domain.user.domain.enums.AuthProvider;
+import kr.flab.snapnow.domain.user.domain.enums.Gender;
 
 @Getter
 @Builder
