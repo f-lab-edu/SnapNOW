@@ -16,7 +16,7 @@ public class CompactProfileWithFollowStatus extends CompactProfile {
 
     private FollowStatus followStatus;
 
-    private CompactProfileWithFollowStatus(
+    protected CompactProfileWithFollowStatus(
             Long userId, String userName, String profileImageUrl, FollowStatus followStatus) {
         super(userId, userName, profileImageUrl);
 

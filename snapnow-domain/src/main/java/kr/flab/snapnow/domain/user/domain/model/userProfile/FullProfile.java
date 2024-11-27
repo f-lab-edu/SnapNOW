@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 
 import kr.flab.snapnow.domain.user.domain.enums.FollowStatus;
 
@@ -19,7 +18,7 @@ public class FullProfile extends UserProfile {
 
     private FollowStatus followStatus;
 
-    private FullProfile(
+    protected FullProfile(
             Long userId, String userName, String fullName, String biography, String profileImageUrl,
             int postCount, int followerCount, int followingCount, FollowStatus followStatus) {
         super(userId, userName, fullName, biography, profileImageUrl);
