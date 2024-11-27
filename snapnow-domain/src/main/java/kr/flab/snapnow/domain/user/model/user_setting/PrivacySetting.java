@@ -1,6 +1,6 @@
 package kr.flab.snapnow.domain.user.model.user_setting;
 
-import java.util.HashSet;
+import java.util.HashMap;
 
 import kr.flab.snapnow.domain.user.enums.setting.SettingCategory;
 import kr.flab.snapnow.domain.user.enums.setting.setting_option.PrivacySettingOption;
@@ -11,10 +11,10 @@ public class PrivacySetting extends UserSetting<PrivacySettingType, PrivacySetti
 
     public PrivacySetting() {
         this.category = SettingCategory.PRIVACY;
-        this.settings = new HashSet<>();
+        this.settings = new HashMap<>();
 
         this.category.getSettingType().forEach(settingType -> {
-            this.settings.add(new PrivacySettingElement((PrivacySettingType) settingType));
+            this.settings.put((PrivacySettingType) settingType, PrivacySettingOption.PUBLIC);
         });
     }
 
