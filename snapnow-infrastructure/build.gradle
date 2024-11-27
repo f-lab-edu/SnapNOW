@@ -1,5 +1,16 @@
+plugins {
+    id 'java'
+}
+
+group = 'kr.flab'
+version = '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
 dependencies {
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    implementation project(':snapnow-domain')
 
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
@@ -7,8 +18,4 @@ dependencies {
 
 test {
     useJUnitPlatform()
-}
-
-bootJar {
-	enabled = false
 }
