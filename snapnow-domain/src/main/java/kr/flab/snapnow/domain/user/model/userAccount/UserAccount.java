@@ -1,4 +1,4 @@
-package kr.flab.snapnow.domain.user.model.user_account;
+package kr.flab.snapnow.domain.user.model.userAccount;
 
 import java.time.LocalDate;
 import java.util.Locale;
