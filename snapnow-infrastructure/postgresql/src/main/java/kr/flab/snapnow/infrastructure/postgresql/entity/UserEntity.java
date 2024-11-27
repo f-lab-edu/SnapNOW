@@ -31,8 +31,6 @@ public class UserEntity extends BaseEntity {
     private LocalDate birthDay;
     private String phoneNumber;
 
-    private String deletedReason;
-
     public UserEntity(
         Long id,
         String email,
@@ -50,7 +48,7 @@ public class UserEntity extends BaseEntity {
         LocalDateTime updatedAt,
         LocalDateTime deletedAt
     ) {
-        super(createdAt, updatedAt, deletedAt);
+        super(createdAt, updatedAt, deletedAt, deletedReason);
 
         this.id = id;
         this.email = email;
@@ -63,6 +61,5 @@ public class UserEntity extends BaseEntity {
         this.locale = locale;
         this.birthDay = birthDay;
         this.phoneNumber = phoneNumber;
-        this.deletedReason = deletedReason;
     }
 }
