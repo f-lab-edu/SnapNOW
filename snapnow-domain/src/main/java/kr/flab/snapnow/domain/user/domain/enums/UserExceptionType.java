@@ -12,6 +12,7 @@ public enum UserExceptionType implements ResultCode {
     USER_NOT_FOUND("User not found"),
     DELETED_USER("Deleted user"),
     USER_ALREADY_EXISTS("User already exists"),
+    USER_REQUIRED_ARGUMENT("Required argument is missing"),
 
     // UserAccount
     IDENTITY_REQUIRED("Email or providerId must be provided"),
