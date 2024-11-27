@@ -13,11 +13,5 @@ public class FullProfile extends UserProfile {
     private int followerCount;
     private int followingCount;
 
-    private String postCountText;
-    private String followerCountText;
-    private String followingCountText;
-
     private FollowStatus followStatus;
-
-    // Todo: count 입력 시 단위에 따른 텍스트 변환 로직 추가 (builer override)
 }
