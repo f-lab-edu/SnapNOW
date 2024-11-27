@@ -23,8 +23,5 @@ public class UserProfileResponse {
 
     private FollowStatus followStatus;
     // Todo: follower 알림 설정 필드 추가
-
-    private boolean isPrivate;
-
     // Todo: count 입력 시 단위에 따른 텍스트 변환 로직 추가 (builer override)
 }
