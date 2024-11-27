@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum ExceptionCode implements ResultCode {
+public enum ExceptionType implements ResultCode {
 
     BAD_REQUEST("Bad Request"),
     UNAUTHORIZED("Unauthorized request"),
