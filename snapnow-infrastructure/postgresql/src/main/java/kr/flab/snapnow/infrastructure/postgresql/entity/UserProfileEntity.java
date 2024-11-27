@@ -1,4 +1,4 @@
-package kr.flab.snapnow.domain.user.entity;
+package kr.flab.snapnow.infrastructure.postgresql.entity;
 
 import java.time.LocalDateTime;
 
