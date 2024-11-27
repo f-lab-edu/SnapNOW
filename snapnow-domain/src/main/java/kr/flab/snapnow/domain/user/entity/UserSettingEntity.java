@@ -6,11 +6,10 @@ import lombok.Getter;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
-
-import kr.flab.snapnow.domain.user.enums.setting.setting_option.NotificationSettingOption;
-import kr.flab.snapnow.domain.user.enums.setting.setting_option.PrivacySettingOption;
-import kr.flab.snapnow.domain.user.enums.setting.setting_type.NotificationSetting;
-import kr.flab.snapnow.domain.user.enums.setting.setting_type.PrivacySetting;
+import kr.flab.snapnow.domain.user.enums.setting.settingOption.NotificationSettingOption;
+import kr.flab.snapnow.domain.user.enums.setting.settingOption.PrivacySettingOption;
+import kr.flab.snapnow.domain.user.enums.setting.settingType.NotificationSettingType;
+import kr.flab.snapnow.domain.user.enums.setting.settingType.PrivacySettingType;
 
 @Getter
 @Builder
@@ -19,6 +18,6 @@ import kr.flab.snapnow.domain.user.enums.setting.setting_type.PrivacySetting;
 public class UserSettingEntity {
 
     private Long userId;
-    private Map<NotificationSetting, NotificationSettingOption> notificationSettings;
-    private Map<PrivacySetting, PrivacySettingOption> privacySettings;
+    private Map<NotificationSettingType, NotificationSettingOption> notificationSettings;
+    private Map<PrivacySettingType, PrivacySettingOption> privacySettings;
 }

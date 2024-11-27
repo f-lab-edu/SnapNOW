@@ -1,9 +1,8 @@
 package kr.flab.snapnow.user.dto.response.setting;
 
 import lombok.experimental.SuperBuilder;
-
-import kr.flab.snapnow.domain.user.enums.setting.setting_option.PrivacySettingOption;
-import kr.flab.snapnow.domain.user.enums.setting.setting_type.PrivacySettingType;
+import kr.flab.snapnow.domain.user.enums.setting.settingOption.PrivacySettingOption;
+import kr.flab.snapnow.domain.user.enums.setting.settingType.PrivacySettingType;
 
 @SuperBuilder
 public class PrivacySettingElement

@@ -1,4 +1,4 @@
-package kr.flab.snapnow.domain.user.enums.setting.setting_option;
+package kr.flab.snapnow.domain.user.enums.setting.settingOption;
 
 import kr.flab.snapnow.domain.user.enums.setting.SettingCategory;
 

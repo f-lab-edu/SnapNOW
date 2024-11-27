@@ -5,11 +5,10 @@ import java.util.Map;
 
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
-
-import kr.flab.snapnow.domain.user.enums.setting.setting_option.SettingOption;
-import kr.flab.snapnow.domain.user.enums.setting.setting_type.SettingType;
 import kr.flab.snapnow.domain.user.exception.InvalidSettingException;
 import kr.flab.snapnow.domain.user.enums.setting.SettingCategory;
+import kr.flab.snapnow.domain.user.enums.setting.settingOption.SettingOption;
+import kr.flab.snapnow.domain.user.enums.setting.settingType.SettingType;
 
 @Getter
 @SuperBuilder

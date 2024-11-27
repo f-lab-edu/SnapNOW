@@ -1,16 +1,16 @@
-package kr.flab.snapnow.domain.user.enums.setting.setting_type;
+package kr.flab.snapnow.domain.user.enums.setting.settingType;
 
 import java.util.EnumSet;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import kr.flab.snapnow.domain.user.enums.setting.SettingCategory;
-import kr.flab.snapnow.domain.user.enums.setting.setting_option.NotificationSettingOption;
-import kr.flab.snapnow.domain.user.enums.setting.setting_option.SettingOption;
+import kr.flab.snapnow.domain.user.enums.setting.settingOption.NotificationSettingOption;
+import kr.flab.snapnow.domain.user.enums.setting.settingOption.SettingOption;
 
 @Getter
 @RequiredArgsConstructor
-public enum NotificationSetting implements SettingType {
+public enum NotificationSettingType implements SettingType {
 
     NEW_FOLLOWS("New Follows"),
     COMMENT("Comment"),

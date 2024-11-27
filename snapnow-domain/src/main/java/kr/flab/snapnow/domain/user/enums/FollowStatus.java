@@ -9,7 +9,8 @@ public enum FollowStatus {
 
     FOLLOWING("following"),
     FOLLOWED("followed"),
-    BLOCKED("blocked");
+    BLOCKED("blocked"),
+    SELF("self");
 
     private String value;
 }

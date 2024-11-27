@@ -3,8 +3,8 @@ package kr.flab.snapnow.user.dto.response.setting;
 import java.util.HashSet;
 
 import kr.flab.snapnow.domain.user.enums.setting.SettingCategory;
-import kr.flab.snapnow.domain.user.enums.setting.setting_option.NotificationSettingOption;
-import kr.flab.snapnow.domain.user.enums.setting.setting_type.NotificationSettingType;
+import kr.flab.snapnow.domain.user.enums.setting.settingOption.NotificationSettingOption;
+import kr.flab.snapnow.domain.user.enums.setting.settingType.NotificationSettingType;
 import kr.flab.snapnow.domain.user.exception.InvalidSettingException;
 
 public class NotificationSettingResponse

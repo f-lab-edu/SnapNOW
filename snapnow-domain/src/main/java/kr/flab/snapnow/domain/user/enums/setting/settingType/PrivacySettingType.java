@@ -1,19 +1,18 @@
-package kr.flab.snapnow.domain.user.enums.setting.setting_type;
+package kr.flab.snapnow.domain.user.enums.setting.settingType;
 
 import java.util.EnumSet;
 
 import lombok.RequiredArgsConstructor;
 import lombok.Getter;
 import kr.flab.snapnow.domain.user.enums.setting.SettingCategory;
-import kr.flab.snapnow.domain.user.enums.setting.setting_option.PrivacySettingOption;
-import kr.flab.snapnow.domain.user.enums.setting.setting_option.SettingOption;
+import kr.flab.snapnow.domain.user.enums.setting.settingOption.PrivacySettingOption;
+import kr.flab.snapnow.domain.user.enums.setting.settingOption.SettingOption;
 
 @Getter
 @RequiredArgsConstructor
-public enum PrivacySetting implements SettingType {
+public enum PrivacySettingType implements SettingType {
 
-    PUBLIC("public"),
-    PRIVATE("private");
+    PRIVACY("Privacy");
 
     private final String value;
 

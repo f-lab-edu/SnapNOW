@@ -31,6 +31,8 @@ public class UserEntity extends BaseEntity {
     private LocalDate birthDay;
     private String phoneNumber;
 
+    private String deletedReason;
+
     public UserEntity(
         Long id,
         String email,
@@ -43,6 +45,7 @@ public class UserEntity extends BaseEntity {
         Locale locale,
         LocalDate birthDay,
         String phoneNumber,
+        String deletedReason,
         LocalDateTime createdAt,
         LocalDateTime updatedAt,
         LocalDateTime deletedAt
@@ -60,5 +63,6 @@ public class UserEntity extends BaseEntity {
         this.locale = locale;
         this.birthDay = birthDay;
         this.phoneNumber = phoneNumber;
+        this.deletedReason = deletedReason;
     }
 }
