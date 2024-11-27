@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import lombok.Getter;
-import kr.flab.snapnow.domain.user.enums.setting.setting_option.NotificationSettingOption;
-import kr.flab.snapnow.domain.user.enums.setting.setting_option.PrivacySettingOption;
+import lombok.experimental.SuperBuilder;
+
 import kr.flab.snapnow.domain.user.enums.setting.setting_option.SettingOption;
 import kr.flab.snapnow.domain.user.enums.setting.setting_type.NotificationSettingType;
 import kr.flab.snapnow.domain.user.enums.setting.setting_type.PrivacySettingType;
@@ -13,9 +13,9 @@ import kr.flab.snapnow.domain.user.enums.setting.setting_type.SettingType;
 import kr.flab.snapnow.domain.user.exception.InvalidSettingException;
 import kr.flab.snapnow.domain.user.enums.setting.SettingCategory;
 
-
 @Getter
-public class UserSettingElement<
+@SuperBuilder
+public abstract class UserSettingElement<
     T extends Enum<T> & SettingType, U extends Enum<U> & SettingOption> {
 
     protected T settingType;
