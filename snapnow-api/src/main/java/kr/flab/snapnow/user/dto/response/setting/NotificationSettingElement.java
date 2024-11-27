@@ -1,4 +1,4 @@
-package kr.flab.snapnow.domain.user.model.user_setting;
+package kr.flab.snapnow.user.dto.response.setting;
 
 import lombok.experimental.SuperBuilder;
 
@@ -13,7 +13,8 @@ public class NotificationSettingElement
         super(settingType, NotificationSettingOption.ALL);
     }
 
-    public NotificationSettingElement(NotificationSettingType settingType, NotificationSettingOption settingOption) {
+    public NotificationSettingElement(
+        NotificationSettingType settingType, NotificationSettingOption settingOption) {
         super(settingType, settingOption);
     }
 }

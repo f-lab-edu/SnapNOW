@@ -1,4 +1,4 @@
-package kr.flab.snapnow.domain.user.model.user_setting;
+package kr.flab.snapnow.user.dto.response.setting;
 
 import java.util.HashMap;
 import java.util.Map;
