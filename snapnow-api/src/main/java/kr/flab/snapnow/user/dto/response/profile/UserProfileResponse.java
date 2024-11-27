@@ -1,14 +1,12 @@
 package kr.flab.snapnow.user.dto.response.profile;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 
 import kr.flab.snapnow.domain.user.enums.FollowStatus;
 
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@Builder
 public class UserProfileResponse {
 
     private Long userId;
@@ -24,7 +22,7 @@ public class UserProfileResponse {
     private String followingCountText;
 
     private FollowStatus followStatus;
-    // follower 알림 설정
+    // Todo: follower 알림 설정 필드 추가
 
     private boolean isPrivate;
 

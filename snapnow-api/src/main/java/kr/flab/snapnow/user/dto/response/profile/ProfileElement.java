@@ -3,12 +3,10 @@ package kr.flab.snapnow.user.dto.response.profile;
 import kr.flab.snapnow.domain.user.enums.FollowStatus;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@Builder
 public class ProfileElement {
 
     private Long userId;
