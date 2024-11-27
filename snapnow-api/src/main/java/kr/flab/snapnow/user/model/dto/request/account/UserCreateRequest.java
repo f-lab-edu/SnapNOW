@@ -1,4 +1,4 @@
-package kr.flab.snapnow.user.dto.request.account;
+package kr.flab.snapnow.user.model.dto.request.account;
 
 import java.time.LocalDate;
 import java.util.Locale;
@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import kr.flab.snapnow.domain.user.enums.Gender;
+import kr.flab.snapnow.domain.user.domain.enums.Gender;
 
 @Getter
 @NoArgsConstructor

@@ -1,4 +1,4 @@
-package kr.flab.snapnow.user.dto.response.profile;
+package kr.flab.snapnow.user.model.dto.response.profile;
 
 import java.util.List;
 

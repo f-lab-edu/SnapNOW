@@ -1,4 +1,4 @@
-package kr.flab.snapnow.user.dto.request.account;
+package kr.flab.snapnow.user.model.dto.request.account;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
