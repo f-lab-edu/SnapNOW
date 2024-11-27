@@ -1,4 +1,4 @@
-package kr.flab.snapnow.domain.user.enums.setting.setting_option;
+package kr.flab.snapnow.domain.user.enums.setting.settingOption;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -7,11 +7,10 @@ import kr.flab.snapnow.domain.user.enums.setting.SettingCategory;
 
 @Getter
 @RequiredArgsConstructor
-public enum NotificationSettingOption implements SettingOption {
+public enum PrivacySettingOption implements SettingOption {
 
-    ALL("All"),
-    FROM_FOLLOWER("From Follower"),
-    OFF("Off");
+    PRIVATE("Private"),
+    PUBLIC("Public");
 
     private final String value;
 
@@ -22,6 +21,6 @@ public enum NotificationSettingOption implements SettingOption {
 
     @Override
     public SettingCategory getCategory() {
-        return SettingCategory.NOTIFICATION;
+        return SettingCategory.PRIVACY;
     }
 }
