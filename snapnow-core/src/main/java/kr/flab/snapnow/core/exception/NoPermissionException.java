@@ -1,12 +1,12 @@
 package kr.flab.snapnow.core.exception;
 
-import kr.flab.snapnow.core.enums.ExceptionCode;
+import kr.flab.snapnow.core.enums.ExceptionType;
 import kr.flab.snapnow.core.enums.ResultCode;
 
 public class NoPermissionException extends SnapnowException {
 
     public NoPermissionException() {
-        super(ExceptionCode.NO_PERMISSION);
+        super(ExceptionType.NO_PERMISSION);
     }
 
     public NoPermissionException(ResultCode resultCode) {
@@ -14,7 +14,7 @@ public class NoPermissionException extends SnapnowException {
     }
 
     public NoPermissionException(String message) {
-        super(ExceptionCode.NO_PERMISSION, message);
+        super(ExceptionType.NO_PERMISSION, message);
     }
 
     public NoPermissionException(ResultCode resultCode, String message) {
@@ -26,7 +26,7 @@ public class NoPermissionException extends SnapnowException {
     }
 
     public NoPermissionException(String message, Throwable cause) {
-        super(ExceptionCode.NO_PERMISSION, message, cause);
+        super(ExceptionType.NO_PERMISSION, message, cause);
     }
 
     public NoPermissionException(ResultCode resultCode, String message, Throwable cause) {

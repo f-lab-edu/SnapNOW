@@ -1,12 +1,12 @@
 package kr.flab.snapnow.core.exception;
 
 import kr.flab.snapnow.core.enums.ResultCode;
-import kr.flab.snapnow.core.enums.ExceptionCode;
+import kr.flab.snapnow.core.enums.ExceptionType;
 
 public class BadRequestException extends SnapnowException {
 
     public BadRequestException() {
-        super(ExceptionCode.BAD_REQUEST);
+        super(ExceptionType.BAD_REQUEST);
     }
 
     public BadRequestException(ResultCode resultCode) {
@@ -14,7 +14,7 @@ public class BadRequestException extends SnapnowException {
     }
 
     public BadRequestException(String message) {
-        super(ExceptionCode.BAD_REQUEST, message);
+        super(ExceptionType.BAD_REQUEST, message);
     }
 
     public BadRequestException(ResultCode resultCode, String message) {
@@ -26,7 +26,7 @@ public class BadRequestException extends SnapnowException {
     }
 
     public BadRequestException(String message, Throwable cause) {
-        super(ExceptionCode.BAD_REQUEST, message, cause);
+        super(ExceptionType.BAD_REQUEST, message, cause);
     }
 
     public BadRequestException(ResultCode resultCode, String message, Throwable cause) {

@@ -1,12 +1,12 @@
 package kr.flab.snapnow.core.exception;
 
-import kr.flab.snapnow.core.enums.ExceptionCode;
+import kr.flab.snapnow.core.enums.ExceptionType;
 import kr.flab.snapnow.core.enums.ResultCode;
 
 public class UnAuthorizedException extends SnapnowException {
 
     public UnAuthorizedException() {
-        super(ExceptionCode.UNAUTHORIZED);
+        super(ExceptionType.UNAUTHORIZED);
     }
 
     public UnAuthorizedException(ResultCode resultCode) {
@@ -14,7 +14,7 @@ public class UnAuthorizedException extends SnapnowException {
     }
 
     public UnAuthorizedException(String message) {
-        super(ExceptionCode.UNAUTHORIZED, message);
+        super(ExceptionType.UNAUTHORIZED, message);
     }
 
     public UnAuthorizedException(ResultCode resultCode, String message) {
@@ -26,7 +26,7 @@ public class UnAuthorizedException extends SnapnowException {
     }
 
     public UnAuthorizedException(String message, Throwable cause) {
-        super(ExceptionCode.UNAUTHORIZED, message, cause);
+        super(ExceptionType.UNAUTHORIZED, message, cause);
     }
 
     public UnAuthorizedException(ResultCode resultCode, String message, Throwable cause) {

@@ -1,12 +1,12 @@
 package kr.flab.snapnow.core.exception;
 
-import kr.flab.snapnow.core.enums.ExceptionCode;
+import kr.flab.snapnow.core.enums.ExceptionType;
 import kr.flab.snapnow.core.enums.ResultCode;
 
 public class NotFoundException extends SnapnowException {
 
     public NotFoundException() {
-        super(ExceptionCode.NOT_FOUND);
+        super(ExceptionType.NOT_FOUND);
     }
 
     public NotFoundException(ResultCode resultCode) {
@@ -14,7 +14,7 @@ public class NotFoundException extends SnapnowException {
     }
 
     public NotFoundException(String message) {
-        super(ExceptionCode.NOT_FOUND, message);
+        super(ExceptionType.NOT_FOUND, message);
     }
 
     public NotFoundException(ResultCode resultCode, String message) {
@@ -26,7 +26,7 @@ public class NotFoundException extends SnapnowException {
     }
 
     public NotFoundException(String message, Throwable cause) {
-        super(ExceptionCode.NOT_FOUND, message, cause);
+        super(ExceptionType.NOT_FOUND, message, cause);
     }
 
     public NotFoundException(ResultCode resultCode, String message, Throwable cause) {
