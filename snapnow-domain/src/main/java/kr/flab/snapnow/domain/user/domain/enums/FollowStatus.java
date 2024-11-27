@@ -1,4 +1,4 @@
-package kr.flab.snapnow.domain.user.enums;
+package kr.flab.snapnow.domain.user.domain.enums;
 
 import lombok.Getter;
 import lombok.AllArgsConstructor;

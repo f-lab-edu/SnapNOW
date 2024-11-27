@@ -1,9 +1,9 @@
-package kr.flab.snapnow.domain.user.model.userProfile;
+package kr.flab.snapnow.domain.user.domain.model.userProfile;
 
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
-import kr.flab.snapnow.domain.user.enums.FollowStatus;
+import kr.flab.snapnow.domain.user.domain.enums.FollowStatus;
 
 @Getter
 @SuperBuilder
