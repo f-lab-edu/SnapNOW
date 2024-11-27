@@ -1,6 +1,5 @@
 package kr.flab.snapnow.domain.user.domain.exception;
 
-import kr.flab.snapnow.core.enums.ResultCode;
 import kr.flab.snapnow.core.exception.IllegalArgumentException;
 import kr.flab.snapnow.domain.user.domain.enums.UserExceptionType;
 
@@ -10,8 +9,8 @@ public class InvalidSettingException extends IllegalArgumentException {
         super(UserExceptionType.INVALID_SETTING);
     }
 
-    public InvalidSettingException(ResultCode resultCode) {
-        super(resultCode);
+    public InvalidSettingException(UserExceptionType userExceptionType) {
+        super(userExceptionType);
     }
 
     public InvalidSettingException(String message) {
@@ -20,9 +19,5 @@ public class InvalidSettingException extends IllegalArgumentException {
 
     public InvalidSettingException(Throwable cause) {
         super(UserExceptionType.INVALID_SETTING, cause);
-    }
-
-    public InvalidSettingException(String message, Throwable cause) {
-        super(UserExceptionType.INVALID_SETTING, message, cause);
     }
 }
