@@ -1,4 +1,4 @@
-package kr.flab.snapnow.domain.user.model.user_profile;
+package kr.flab.snapnow.domain.user.model.userProfile;
 
 import jakarta.validation.constraints.NotBlank;
 

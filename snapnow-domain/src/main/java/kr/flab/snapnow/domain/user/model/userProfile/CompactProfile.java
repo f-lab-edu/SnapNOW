@@ -1,4 +1,4 @@
-package kr.flab.snapnow.domain.user.model.user_profile;
+package kr.flab.snapnow.domain.user.model.userProfile;
 
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;

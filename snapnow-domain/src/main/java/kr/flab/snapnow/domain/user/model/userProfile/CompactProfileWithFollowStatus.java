@@ -1,4 +1,4 @@
-package kr.flab.snapnow.domain.user.model.user_profile;
+package kr.flab.snapnow.domain.user.model.userProfile;
 
 import kr.flab.snapnow.domain.user.enums.FollowStatus;
 
@@ -7,7 +7,7 @@ import lombok.experimental.SuperBuilder;
 
 @Getter
 @SuperBuilder
-public class CompactProfileElement extends CompactProfile {
+public class CompactProfileWithFollowStatus extends CompactProfile {
 
     private FollowStatus followStatus;
 }
