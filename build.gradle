@@ -24,7 +24,7 @@ subprojects {
 	apply plugin: 'java'
 	apply plugin: 'org.springframework.boot'
 
-	group = 'kr.flab'
+	group = 'kr.flab.snapnow'
 	version = '0.0.1-SNAPSHOT'
 
 	repositories {
@@ -36,6 +36,10 @@ subprojects {
 		annotationProcessor 'org.projectlombok:lombok'
 
 		implementation 'com.google.googlejavaformat:google-java-format:1.18.0'
+	}
+
+	bootJar {
+		enabled = false
 	}
 }
 
