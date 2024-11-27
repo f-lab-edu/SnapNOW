@@ -2,54 +2,61 @@ package kr.flab.snapnow.domain.user.domain.model.userAccount;
 
 import java.time.LocalDate;
 import java.util.Locale;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 import lombok.Getter;
+import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 import kr.flab.snapnow.domain.user.domain.enums.AuthProvider;
 import kr.flab.snapnow.domain.user.domain.enums.Gender;
+import kr.flab.snapnow.domain.user.domain.exception.IdentityRequiredException;
+import kr.flab.snapnow.domain.user.domain.exception.InvalidEmailException;
+import kr.flab.snapnow.domain.user.domain.exception.InvalidPasswordException;
 
 @Getter
 @Builder
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserAccount {
 
-    // Todo: annotation을 사용하는 경우 예외처리를 어떻게 해야 일관성을 유지할지 생각해보자
-
     private Long id;
-
-    @Email(message = "Invalid email format")
     private String email;
-
-    @NotBlank(message = "Password cannot be blank")
     private String password;
-
-    @NotNull(message = "Auth provider cannot be null")
     private AuthProvider authProvider;
     private String providerId;
 
     private String name;
     private LocalDate birthDay;
     private String phoneNumber;
-
-    @Builder.Default
-    private Gender gender = Gender.UNKNOWN;
-
-    @Builder.Default
-    private Locale locale = Locale.KOREA;
-
-    @Builder.Default
-    private boolean verifiedEmail = false;
+    private Gender gender;
+    private Locale locale;
+    private boolean verifiedEmail;
 
     public static class UserAccountBuilder {
 
-        public UserAccountBuilder build() {
-            if (this.email == null && this.providerId == null) {
-                throw new IllegalArgumentException("Email or providerId must be provided");
+        private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+
+        public UserAccount build() {
+            if (email == null || providerId == null) {
+                throw new IdentityRequiredException();
             }
-            return this;
+            if (email != null && !email.matches(EMAIL_REGEX)) {
+                throw new InvalidEmailException();
+            }
+            if (password == null || password.isBlank()) {
+                throw new InvalidPasswordException();
+            }
+            if (locale == null) {
+                locale = Locale.KOREA;
+            }
+            if (gender == null) {
+                gender = Gender.UNKNOWN;
+            }
+
+            return new UserAccount(id, email, password, authProvider, providerId, name, birthDay,
+                    phoneNumber, gender, locale, verifiedEmail);
         }
     }
 
