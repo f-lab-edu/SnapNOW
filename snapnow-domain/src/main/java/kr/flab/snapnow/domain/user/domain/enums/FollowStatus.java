@@ -1,16 +1,17 @@
 package kr.flab.snapnow.domain.user.domain.enums;
 
 import lombok.Getter;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Getter
-@AllArgsConstructor
+@RequiredArgsConstructor
 public enum FollowStatus {
 
     FOLLOWING("following"),
     FOLLOWED("followed"),
     BLOCKED("blocked"),
+    NONE("none"),
     SELF("self");
 
-    private String value;
+    private final String value;
 }
