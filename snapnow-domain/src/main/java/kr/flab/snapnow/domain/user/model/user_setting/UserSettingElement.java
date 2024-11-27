@@ -7,8 +7,6 @@ import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
 import kr.flab.snapnow.domain.user.enums.setting.setting_option.SettingOption;
-import kr.flab.snapnow.domain.user.enums.setting.setting_type.NotificationSettingType;
-import kr.flab.snapnow.domain.user.enums.setting.setting_type.PrivacySettingType;
 import kr.flab.snapnow.domain.user.enums.setting.setting_type.SettingType;
 import kr.flab.snapnow.domain.user.exception.InvalidSettingException;
 import kr.flab.snapnow.domain.user.enums.setting.SettingCategory;
@@ -20,16 +18,6 @@ public abstract class UserSettingElement<
 
     protected T settingType;
     protected U settingOption;
-
-    public UserSettingElement(T settingType) {
-        this.settingType = settingType;
-
-        if (settingType instanceof NotificationSettingType) {
-            this.settingOption = (U) NotificationSettingOption.ALL;
-        } else if (settingType instanceof PrivacySettingType) {
-            this.settingOption = (U) PrivacySettingOption.PUBLIC;
-        }
-    }
 
     public UserSettingElement(T settingType, U settingOption) {
         if (!SettingCategory.isValidSetting(settingType, settingOption)) {
