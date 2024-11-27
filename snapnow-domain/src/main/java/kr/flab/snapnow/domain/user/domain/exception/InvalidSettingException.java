@@ -1,8 +1,12 @@
-package kr.flab.snapnow.domain.user.exception;
+package kr.flab.snapnow.domain.user.domain.exception;
 
 import kr.flab.snapnow.core.enums.ResultCode;
 import kr.flab.snapnow.core.exception.IllegalArgumentException;
+<<<<<<< HEAD:snapnow-domain/src/main/java/kr/flab/snapnow/domain/user/exception/InvalidSettingException.java
 import kr.flab.snapnow.domain.user.enums.UserExceptionCode;
+=======
+import kr.flab.snapnow.domain.user.domain.enums.UserExceptionType;
+>>>>>>> 24e91f7 (rename(model): Move model (domain) files into model (domain) folder):snapnow-domain/src/main/java/kr/flab/snapnow/domain/user/domain/exception/InvalidSettingException.java
 
 public class InvalidSettingException extends IllegalArgumentException {
 
