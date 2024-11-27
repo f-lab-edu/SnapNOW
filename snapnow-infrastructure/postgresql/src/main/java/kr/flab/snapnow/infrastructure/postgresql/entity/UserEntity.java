@@ -9,8 +9,8 @@ import lombok.experimental.SuperBuilder;
 import lombok.NoArgsConstructor;
 
 import kr.flab.snapnow.core.entity.BaseEntity;
-import kr.flab.snapnow.domain.user.enums.AuthProvider;
-import kr.flab.snapnow.domain.user.enums.Gender;
+import kr.flab.snapnow.domain.user.domain.enums.AuthProvider;
+import kr.flab.snapnow.domain.user.domain.enums.Gender;
 
 @Getter
 @Setter

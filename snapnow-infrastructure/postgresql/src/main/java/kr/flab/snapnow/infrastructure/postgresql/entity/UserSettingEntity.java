@@ -7,10 +7,10 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
-import kr.flab.snapnow.domain.user.enums.setting.settingOption.NotificationSettingOption;
-import kr.flab.snapnow.domain.user.enums.setting.settingOption.PrivacySettingOption;
-import kr.flab.snapnow.domain.user.enums.setting.settingType.NotificationSettingType;
-import kr.flab.snapnow.domain.user.enums.setting.settingType.PrivacySettingType;
+import kr.flab.snapnow.domain.user.domain.enums.setting.settingOption.NotificationSettingOption;
+import kr.flab.snapnow.domain.user.domain.enums.setting.settingOption.PrivacySettingOption;
+import kr.flab.snapnow.domain.user.domain.enums.setting.settingType.NotificationSettingType;
+import kr.flab.snapnow.domain.user.domain.enums.setting.settingType.PrivacySettingType;
 
 @Getter
 @Builder
