@@ -18,6 +18,7 @@ import kr.flab.snapnow.domain.user.domain.exception.InvalidSettingException;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class PrivacySetting extends UserSetting<PrivacySettingType, PrivacySettingOption> {
 
+    private Long userId;
     private SettingCategory category;
     private Map<PrivacySettingType, PrivacySettingOption> settings;
 
@@ -36,7 +37,7 @@ public class PrivacySetting extends UserSetting<PrivacySettingType, PrivacySetti
             if (!SettingCategory.PRIVACY.equals(category)) {
                 throw new InvalidSettingException();
             }
-            return new PrivacySetting(category, settings);
+            return new PrivacySetting(userId, category, settings);
         }
     }
 }

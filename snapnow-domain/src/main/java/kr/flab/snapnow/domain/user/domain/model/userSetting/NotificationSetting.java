@@ -18,6 +18,7 @@ import kr.flab.snapnow.domain.user.domain.exception.InvalidSettingException;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class NotificationSetting extends UserSetting<NotificationSettingType, NotificationSettingOption> {
 
+    private Long userId;
     private SettingCategory category;
     private Map<NotificationSettingType, NotificationSettingOption> settings;
 
@@ -36,7 +37,7 @@ public class NotificationSetting extends UserSetting<NotificationSettingType, No
             if (!SettingCategory.NOTIFICATION.equals(category)) {
                 throw new InvalidSettingException();
             }
-            return new NotificationSetting(category, settings);
+            return new NotificationSetting(userId, category, settings);
         }
     }
 }

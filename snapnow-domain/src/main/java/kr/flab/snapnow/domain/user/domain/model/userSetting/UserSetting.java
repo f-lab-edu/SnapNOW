@@ -9,6 +9,7 @@ import kr.flab.snapnow.domain.user.domain.enums.setting.settingType.SettingType;
 public abstract class UserSetting<
     T extends Enum<T> & SettingType, U extends Enum<U> & SettingOption> {
 
+    protected Long userId;
     protected SettingCategory category;
     protected Map<T, U> settings;
 
