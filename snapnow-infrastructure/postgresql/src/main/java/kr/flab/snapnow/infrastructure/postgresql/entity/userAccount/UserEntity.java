@@ -1,4 +1,4 @@
-package kr.flab.snapnow.infrastructure.postgresql.entity;
+package kr.flab.snapnow.infrastructure.postgresql.entity.userAccount;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 import kr.flab.snapnow.core.entity.BaseEntity;
 import kr.flab.snapnow.domain.user.domain.enums.AuthProvider;
@@ -16,6 +17,7 @@ import kr.flab.snapnow.domain.user.domain.enums.Gender;
 @Setter
 @SuperBuilder
 @NoArgsConstructor
+@AllArgsConstructor
 public class UserEntity extends BaseEntity {
 
     private Long id;

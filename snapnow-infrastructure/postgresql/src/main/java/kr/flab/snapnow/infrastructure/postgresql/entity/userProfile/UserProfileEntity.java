@@ -1,13 +1,15 @@
-package kr.flab.snapnow.infrastructure.postgresql.entity;
+package kr.flab.snapnow.infrastructure.postgresql.entity.userProfile;
 
 import java.time.LocalDateTime;
 
 import lombok.Getter;
+import lombok.Setter;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

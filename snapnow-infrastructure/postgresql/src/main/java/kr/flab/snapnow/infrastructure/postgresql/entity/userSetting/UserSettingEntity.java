@@ -1,8 +1,9 @@
-package kr.flab.snapnow.infrastructure.postgresql.entity;
+package kr.flab.snapnow.infrastructure.postgresql.entity.userSetting;
 
 import java.util.Map;
 
 import lombok.Getter;
+import lombok.Setter;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -13,6 +14,7 @@ import kr.flab.snapnow.domain.user.domain.enums.setting.settingType.Notification
 import kr.flab.snapnow.domain.user.domain.enums.setting.settingType.PrivacySettingType;
 
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
