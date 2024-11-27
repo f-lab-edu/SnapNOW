@@ -1,11 +1,11 @@
-package kr.flab.snapnow.domain.user.model.userSetting;
+package kr.flab.snapnow.domain.user.domain.model.userSetting;
 
 import java.util.HashMap;
 
-import kr.flab.snapnow.domain.user.enums.setting.SettingCategory;
-import kr.flab.snapnow.domain.user.enums.setting.settingOption.NotificationSettingOption;
-import kr.flab.snapnow.domain.user.enums.setting.settingType.NotificationSettingType;
-import kr.flab.snapnow.domain.user.exception.InvalidSettingException;
+import kr.flab.snapnow.domain.user.domain.enums.setting.SettingCategory;
+import kr.flab.snapnow.domain.user.domain.enums.setting.settingOption.NotificationSettingOption;
+import kr.flab.snapnow.domain.user.domain.enums.setting.settingType.NotificationSettingType;
+import kr.flab.snapnow.domain.user.domain.exception.InvalidSettingException;
 
 public class NotificationSetting extends UserSetting<NotificationSettingType, NotificationSettingOption> {
 

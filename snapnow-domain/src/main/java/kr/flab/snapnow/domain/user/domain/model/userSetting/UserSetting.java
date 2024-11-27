@@ -1,4 +1,4 @@
-package kr.flab.snapnow.domain.user.model.userSetting;
+package kr.flab.snapnow.domain.user.domain.model.userSetting;
 
 import java.util.Map;
 
@@ -6,9 +6,9 @@ import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 import lombok.NoArgsConstructor;
 
-import kr.flab.snapnow.domain.user.enums.setting.SettingCategory;
-import kr.flab.snapnow.domain.user.enums.setting.settingOption.SettingOption;
-import kr.flab.snapnow.domain.user.enums.setting.settingType.SettingType;
+import kr.flab.snapnow.domain.user.domain.enums.setting.SettingCategory;
+import kr.flab.snapnow.domain.user.domain.enums.setting.settingOption.SettingOption;
+import kr.flab.snapnow.domain.user.domain.enums.setting.settingType.SettingType;
 
 @Getter
 @SuperBuilder

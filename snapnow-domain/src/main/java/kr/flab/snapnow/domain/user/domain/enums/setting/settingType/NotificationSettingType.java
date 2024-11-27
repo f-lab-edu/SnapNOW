@@ -1,12 +1,12 @@
-package kr.flab.snapnow.domain.user.enums.setting.settingType;
+package kr.flab.snapnow.domain.user.domain.enums.setting.settingType;
 
 import java.util.EnumSet;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import kr.flab.snapnow.domain.user.enums.setting.SettingCategory;
-import kr.flab.snapnow.domain.user.enums.setting.settingOption.NotificationSettingOption;
-import kr.flab.snapnow.domain.user.enums.setting.settingOption.SettingOption;
+import kr.flab.snapnow.domain.user.domain.enums.setting.SettingCategory;
+import kr.flab.snapnow.domain.user.domain.enums.setting.settingOption.NotificationSettingOption;
+import kr.flab.snapnow.domain.user.domain.enums.setting.settingOption.SettingOption;
 
 @Getter
 @RequiredArgsConstructor

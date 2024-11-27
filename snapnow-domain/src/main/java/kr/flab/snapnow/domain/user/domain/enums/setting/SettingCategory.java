@@ -1,16 +1,16 @@
-package kr.flab.snapnow.domain.user.enums.setting;
+package kr.flab.snapnow.domain.user.domain.enums.setting;
 
 import java.util.EnumSet;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import kr.flab.snapnow.domain.user.enums.setting.settingOption.NotificationSettingOption;
-import kr.flab.snapnow.domain.user.enums.setting.settingOption.PrivacySettingOption;
-import kr.flab.snapnow.domain.user.enums.setting.settingOption.SettingOption;
-import kr.flab.snapnow.domain.user.enums.setting.settingType.NotificationSettingType;
-import kr.flab.snapnow.domain.user.enums.setting.settingType.PrivacySettingType;
-import kr.flab.snapnow.domain.user.enums.setting.settingType.SettingType;
-import kr.flab.snapnow.domain.user.exception.InvalidSettingException;
+import kr.flab.snapnow.domain.user.domain.enums.setting.settingOption.NotificationSettingOption;
+import kr.flab.snapnow.domain.user.domain.enums.setting.settingOption.PrivacySettingOption;
+import kr.flab.snapnow.domain.user.domain.enums.setting.settingOption.SettingOption;
+import kr.flab.snapnow.domain.user.domain.enums.setting.settingType.NotificationSettingType;
+import kr.flab.snapnow.domain.user.domain.enums.setting.settingType.PrivacySettingType;
+import kr.flab.snapnow.domain.user.domain.enums.setting.settingType.SettingType;
+import kr.flab.snapnow.domain.user.domain.exception.InvalidSettingException;
 
 @Getter
 @RequiredArgsConstructor

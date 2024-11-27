@@ -1,9 +1,9 @@
-package kr.flab.snapnow.domain.user.enums.setting.settingOption;
+package kr.flab.snapnow.domain.user.domain.enums.setting.settingOption;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import kr.flab.snapnow.domain.user.enums.setting.SettingCategory;
+import kr.flab.snapnow.domain.user.domain.enums.setting.SettingCategory;
 
 @Getter
 @RequiredArgsConstructor
