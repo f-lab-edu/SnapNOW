@@ -1,6 +1,6 @@
 package kr.flab.snapnow.domain.user.model.user_setting;
 
-import java.util.HashSet;
+import java.util.HashMap;
 
 import kr.flab.snapnow.domain.user.enums.setting.SettingCategory;
 import kr.flab.snapnow.domain.user.enums.setting.setting_option.NotificationSettingOption;
@@ -11,10 +11,10 @@ public class NotificationSetting extends UserSetting<NotificationSettingType, No
 
     public NotificationSetting() {
         this.category = SettingCategory.NOTIFICATION;
-        this.settings = new HashSet<>();
+        this.settings = new HashMap<>();
 
         this.category.getSettingType().forEach(settingType -> {
-            this.settings.add(new NotificationSettingElement((NotificationSettingType) settingType));
+            this.settings.put((NotificationSettingType) settingType, NotificationSettingOption.ALL);
         });
     }
 
