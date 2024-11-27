@@ -16,9 +16,11 @@ import kr.flab.snapnow.domain.user.enums.Gender;
 @Builder
 public class UserAccount {
 
+    // Todo: annotation을 사용하는 경우 예외처리를 어떻게 해야 일관성을 유지할지 생각해보자
+
     private Long id;
 
-    @Email
+    @Email(message = "Invalid email format")
     private String email;
 
     @NotBlank(message = "Password cannot be blank")
