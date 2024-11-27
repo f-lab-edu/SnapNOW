@@ -1,13 +1,25 @@
 package kr.flab.snapnow.domain.user.domain.model.userSetting;
 
+import java.util.Map;
 import java.util.HashMap;
+
+import lombok.Getter;
+import lombok.Builder;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 
 import kr.flab.snapnow.domain.user.domain.enums.setting.SettingCategory;
 import kr.flab.snapnow.domain.user.domain.enums.setting.settingOption.NotificationSettingOption;
 import kr.flab.snapnow.domain.user.domain.enums.setting.settingType.NotificationSettingType;
 import kr.flab.snapnow.domain.user.domain.exception.InvalidSettingException;
 
+@Getter
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class NotificationSetting extends UserSetting<NotificationSettingType, NotificationSettingOption> {
+
+    private SettingCategory category;
+    private Map<NotificationSettingType, NotificationSettingOption> settings;
 
     public NotificationSetting() {
         this.category = SettingCategory.NOTIFICATION;
@@ -20,11 +32,11 @@ public class NotificationSetting extends UserSetting<NotificationSettingType, No
 
     public static class NotificationSettingBuilder {
 
-        public static NotificationSetting category(SettingCategory category) {
+        public NotificationSetting build() {
             if (!SettingCategory.NOTIFICATION.equals(category)) {
                 throw new InvalidSettingException();
             }
-            return new NotificationSetting();
+            return new NotificationSetting(category, settings);
         }
     }
 }
