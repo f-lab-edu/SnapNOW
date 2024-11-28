@@ -19,6 +19,10 @@ configurations {
 	}
 }
 
+repositories {
+	mavenCentral()
+}
+
 subprojects {
 	apply plugin: 'io.spring.dependency-management' 
 	apply plugin: 'java'
