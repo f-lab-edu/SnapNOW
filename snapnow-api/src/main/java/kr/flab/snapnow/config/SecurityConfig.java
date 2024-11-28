@@ -10,6 +10,10 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
+import org.springframework.security.oauth2.core.AuthorizationGrantType;
 
 import kr.flab.snapnow.jwt.JwtAuthenticationEntryPoint;
 import kr.flab.snapnow.jwt.JwtAuthenticationFilter;
@@ -42,6 +46,23 @@ public class SecurityConfig {
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+            return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public ClientRegistrationRepository clientRegistrationRepository() {
+        ClientRegistration registration = ClientRegistration.withRegistrationId("your-client-id")
+            .clientId("your-client-id")
+            .clientSecret("your-client-secret")
+            .scope("read", "write")
+            .authorizationUri("authorizationUri")
+            .tokenUri("tokenUri")
+            .userInfoUri("userInfoUri")
+            .redirectUri("redirectUri")
+            .clientName("clientName")
+            .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+            .build();
+
+        return new InMemoryClientRegistrationRepository(registration);
     }
 }
