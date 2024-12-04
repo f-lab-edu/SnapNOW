@@ -11,24 +11,28 @@ import kr.flab.snapnow.domain.user.domain.enums.setting.SettingCategory;
 
 public class UserConverter {
 
-    public static UserAccount toUserAccount(UserEntity userEntity) {
+    public static UserAccount toUserAccount(UserAccountEntity userAccountEntity) {
+        UserCredential userCredential = UserCredential.builder()
+                .userId(userAccountEntity.getUserId())
+                .email(userAccountEntity.getEmail())
+                .authProvider(userAccountEntity.getAuthProvider())
+                .providerId(userAccountEntity.getProviderId())
+                .verifiedEmail(userAccountEntity.isVerifiedEmail())
+                .build();
+
         return UserAccount.builder()
-                .id(userEntity.getId())
-                .email(userEntity.getEmail())
-                .authProvider(userEntity.getAuthProvider())
-                .providerId(userEntity.getProviderId())
-                .name(userEntity.getName())
-                .birthDay(userEntity.getBirthDay())
-                .phoneNumber(userEntity.getPhoneNumber())
-                .gender(userEntity.getGender())
-                .locale(userEntity.getLocale())
-                .verifiedEmail(userEntity.isVerifiedEmail())
+                .credential(userCredential)
+                .name(userAccountEntity.getName())
+                .birthDay(userAccountEntity.getBirthDay())
+                .phoneNumber(userAccountEntity.getPhoneNumber())
+                .gender(userAccountEntity.getGender())
+                .locale(userAccountEntity.getLocale())
                 .build();
     }
 
     public static UserCredential toUserCredential(UserCredentialModel userCredentialModel) {
         return UserCredential.builder()
-                .id(userCredentialModel.getId())
+                .userId(userCredentialModel.getUserId())
                 .email(userCredentialModel.getEmail())
                 .authProvider(userCredentialModel.getAuthProvider())
                 .providerId(userCredentialModel.getProviderId())
@@ -38,10 +42,13 @@ public class UserConverter {
     }
 
     public static UserProfile toUserProfile(UserProfileEntity userProfileEntity) {
-        return UserProfile.builder().userId(userProfileEntity.getId())
-                .userName(userProfileEntity.getUserName()).fullName(userProfileEntity.getFullName())
+        return UserProfile.builder()
+                .userId(userProfileEntity.getUserId())
+                .userName(userProfileEntity.getUserName())
+                .fullName(userProfileEntity.getFullName())
                 .biography(userProfileEntity.getBiography())
-                .profileImageUrl(userProfileEntity.getProfileImageUrl()).build();
+                .profileImageUrl(userProfileEntity.getProfileImageUrl())
+                .build();
     }
 
     public static FullProfile toFullProfile(FullProfileModel fullProfileModel) {
@@ -75,29 +82,29 @@ public class UserConverter {
                 .build();
     }
 
-    public static PrivacySetting toPrivacySetting(UserSettingEntity userSettingEntity) {
-        return PrivacySetting.builder()
+    public static PrivacySettings toPrivacySetting(UserSettingEntity userSettingEntity) {
+        return PrivacySettings.builder()
                 .userId(userSettingEntity.getUserId())
                 .category(SettingCategory.PRIVACY)
                 .settings(userSettingEntity.getPrivacySettings())
                 .build();
     }
 
-    public static NotificationSetting toNotificationSetting(UserSettingEntity userSettingEntity) {
-        return NotificationSetting.builder()
+    public static NotificationSettings toNotificationSetting(UserSettingEntity userSettingEntity) {
+        return NotificationSettings.builder()
                 .userId(userSettingEntity.getUserId())
                 .category(SettingCategory.NOTIFICATION)
                 .settings(userSettingEntity.getNotificationSettings())
                 .build();
     }
     
-    public static UserEntity fromUserAccount(UserAccount userAccount) {
-        return UserEntity.builder()
-                .email(userAccount.getEmail())
-                .password(userAccount.getPassword())
-                .authProvider(userAccount.getAuthProvider())
-                .providerId(userAccount.getProviderId())
-                .verifiedEmail(userAccount.isVerifiedEmail())
+    public static UserAccountEntity fromUserAccount(UserAccount userAccount) {
+        return UserAccountEntity.builder()
+                .email(userAccount.getCredential().getEmail())
+                .password(userAccount.getCredential().getPassword())
+                .authProvider(userAccount.getCredential().getAuthProvider())
+                .providerId(userAccount.getCredential().getProviderId())
+                .verifiedEmail(userAccount.getCredential().isVerifiedEmail())
                 .name(userAccount.getName())
                 .gender(userAccount.getGender())
                 .locale(userAccount.getLocale())
@@ -108,7 +115,7 @@ public class UserConverter {
 
     public static UserProfileEntity fromUserProfile(UserProfile userProfile) {
         return UserProfileEntity.builder()
-                .id(userProfile.getUserId())
+                .userId(userProfile.getUserId())
                 .userName(userProfile.getUserName())
                 .fullName(userProfile.getFullName())
                 .biography(userProfile.getBiography())
@@ -117,7 +124,7 @@ public class UserConverter {
     }
 
     public static UserSettingEntity fromNotificationSetting
-        (NotificationSetting notificationSetting, PrivacySetting privacySetting) {
+        (NotificationSettings notificationSetting, PrivacySettings privacySetting) {
         return UserSettingEntity.builder()
                 .userId(notificationSetting.getUserId())
                 .notificationSettings(notificationSetting.getSettings())
