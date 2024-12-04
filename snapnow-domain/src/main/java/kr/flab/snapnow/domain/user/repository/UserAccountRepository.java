@@ -1,12 +1,9 @@
 package kr.flab.snapnow.domain.user.repository;
 
-import java.util.Optional;
-
 import kr.flab.snapnow.domain.user.domain.model.userAccount.UserAccount;
+import kr.flab.snapnow.domain.user.domain.model.userAccount.UserCredential;
 
 public interface UserAccountRepository {
-
-    UserAccount insert(UserAccount userAccount);
 
     UserAccount update(UserAccount userAccount);
 
@@ -14,7 +11,7 @@ public interface UserAccountRepository {
 
     void updatePassword(Long userId, String password);
 
-    void delete(Long userId, String deletedReason);
+    UserAccount find(Long userId);
 
-    Optional<UserAccount> findById(Long userId);
+    UserCredential getCredential(Long userId);
 }
