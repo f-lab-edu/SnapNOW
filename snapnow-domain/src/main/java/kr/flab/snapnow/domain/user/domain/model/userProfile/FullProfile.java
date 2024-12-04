@@ -1,16 +1,15 @@
 package kr.flab.snapnow.domain.user.domain.model.userProfile;
 
 import lombok.Getter;
-import lombok.experimental.SuperBuilder;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import lombok.Builder;
 
 import kr.flab.snapnow.domain.user.domain.enums.FollowStatus;
 
 @Getter
-@SuperBuilder
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class FullProfile extends UserProfile {
+@Builder
+public class FullProfile {
+
+    private UserProfile userProfile;
 
     private int postCount;
     private int followerCount;
@@ -18,11 +17,10 @@ public class FullProfile extends UserProfile {
 
     private FollowStatus followStatus;
 
+    @Builder
     protected FullProfile(
-            Long userId, String userName, String fullName, String biography, String profileImageUrl,
+            UserProfile userProfile,
             int postCount, int followerCount, int followingCount, FollowStatus followStatus) {
-        super(userId, userName, fullName, biography, profileImageUrl);
-
         if (followStatus == null) {
             followStatus = FollowStatus.SELF;
         }
@@ -31,5 +29,17 @@ public class FullProfile extends UserProfile {
         this.followerCount = followerCount;
         this.followingCount = followingCount;
         this.followStatus = followStatus;
+    }
+
+    @Builder
+    protected FullProfile(Long userId, String userName, String fullName, String biography, String profileImageUrl,
+            int postCount, int followerCount, int followingCount, FollowStatus followStatus) {
+        this(UserProfile.builder()
+                .userId(userId)
+                .userName(userName)
+                .fullName(fullName)
+                .biography(biography)
+                .profileImageUrl(profileImageUrl)
+                .build(), postCount, followerCount, followingCount, followStatus);
     }
 }

@@ -1,15 +1,12 @@
 package kr.flab.snapnow.domain.user.domain.model.userProfile;
 
 import lombok.Getter;
-import lombok.experimental.SuperBuilder;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import lombok.Builder;
 
 import kr.flab.snapnow.domain.user.domain.exception.UserRequiredArgumentException;
 
 @Getter
-@SuperBuilder
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 public class UserProfile {
 
     private Long userId;
@@ -18,12 +15,8 @@ public class UserProfile {
     private String biography;
     private String profileImageUrl;
 
-    protected UserProfile(
-            Long userId, String userName, String fullName, String biography,
+    protected UserProfile(Long userId, String userName, String fullName, String biography,
             String profileImageUrl) {
-        if (userId == null) {
-            throw new UserRequiredArgumentException("User ID is required");
-        }
         if (userName == null) {
             throw new UserRequiredArgumentException("User name is required");
         }
