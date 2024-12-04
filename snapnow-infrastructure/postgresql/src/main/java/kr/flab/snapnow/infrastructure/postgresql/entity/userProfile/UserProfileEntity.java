@@ -15,7 +15,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class UserProfileEntity {
 
-    private Long id;
+    private Long userId;
     private String userName;
     private String fullName;
     private String biography;
