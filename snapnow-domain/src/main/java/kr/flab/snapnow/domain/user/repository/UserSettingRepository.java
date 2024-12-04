@@ -1,22 +1,20 @@
 package kr.flab.snapnow.domain.user.repository;
 
-import kr.flab.snapnow.domain.user.domain.model.userSetting.NotificationSetting;
-import kr.flab.snapnow.domain.user.domain.model.userSetting.PrivacySetting;
-import kr.flab.snapnow.domain.user.domain.enums.setting.settingType.SettingType;
+import kr.flab.snapnow.domain.user.domain.model.userSetting.NotificationSettings;
+import kr.flab.snapnow.domain.user.domain.model.userSetting.PrivacySettings;
 import kr.flab.snapnow.domain.user.domain.enums.setting.settingOption.SettingOption;
+import kr.flab.snapnow.domain.user.domain.enums.setting.settingType.SettingType;
 
 public interface UserSettingRepository {
 
-    void insert(NotificationSetting notificationSetting, PrivacySetting privacySetting);
+    void insert(NotificationSettings notificationSetting, PrivacySettings privacySetting);
 
-    void update(NotificationSetting notificationSetting);
+    void update(Long userId, SettingType settingType, SettingOption settingOption);
 
-    void update(PrivacySetting privacySetting);
+    NotificationSettings findNotificationSetting(Long userId);
 
-    NotificationSetting findNotificationSettingById(Long userId);
+    PrivacySettings findPrivacySetting(Long userId);
 
-    PrivacySetting findPrivacySettingById(Long userId);
-
-    SettingOption findSettingOptionByIdAndType(
+    SettingOption findSettingOption(
         Long userId, Enum<? extends SettingType> settingType);
 }
