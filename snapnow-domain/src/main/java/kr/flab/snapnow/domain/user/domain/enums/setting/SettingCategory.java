@@ -19,15 +19,18 @@ public enum SettingCategory {
     NOTIFICATION(
         "Notification",
         EnumSet.allOf(NotificationSettingType.class),
-        EnumSet.allOf(NotificationSettingOption.class)),
+        EnumSet.allOf(NotificationSettingOption.class),
+        NotificationSettingOption.ALL),
     PRIVACY(
         "Privacy",
         EnumSet.allOf(PrivacySettingType.class),
-        EnumSet.allOf(PrivacySettingOption.class));
+        EnumSet.allOf(PrivacySettingOption.class),
+        PrivacySettingOption.PUBLIC);
 
     private final String value;
     private final EnumSet<? extends SettingType> settingType;
     private final EnumSet<? extends SettingOption> settingOption;
+    private final SettingOption defaultSettingOption;
 
     public static boolean isValidSetting(SettingType settingType, SettingOption settingOption) {
         return NOTIFICATION.getSettingType().contains(settingType)

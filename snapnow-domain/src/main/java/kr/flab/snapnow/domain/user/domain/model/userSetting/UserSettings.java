@@ -2,18 +2,27 @@ package kr.flab.snapnow.domain.user.domain.model.userSetting;
 
 import java.util.Map;
 
+import lombok.Getter;
+
 import kr.flab.snapnow.domain.user.domain.enums.setting.SettingCategory;
 import kr.flab.snapnow.domain.user.domain.enums.setting.settingOption.SettingOption;
 import kr.flab.snapnow.domain.user.domain.enums.setting.settingType.SettingType;
 
-public abstract class UserSetting<
+@Getter
+public abstract class UserSettings<
     T extends Enum<T> & SettingType, U extends Enum<U> & SettingOption> {
 
-    protected Long userId;
+    private Long userId;
     protected SettingCategory category;
     protected Map<T, U> settings;
 
-    public void updateSetting(T settingType, U settingOption) {
-        this.settings.put(settingType, settingOption);
+    protected UserSettings(Long userId, SettingCategory category, Map<T, U> settings) {
+        this.userId = userId;
+        this.category = category;
+        this.settings = settings;
+    }
+
+    public SettingOption getSettingOption(T settingType) {
+        return this.settings.get(settingType);
     }
 }

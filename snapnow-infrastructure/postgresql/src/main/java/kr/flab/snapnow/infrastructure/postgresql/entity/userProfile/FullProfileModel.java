@@ -1,10 +1,10 @@
 package kr.flab.snapnow.infrastructure.postgresql.entity.userProfile;
 
+import kr.flab.snapnow.domain.follow.domain.enums.FollowNotification;
+import kr.flab.snapnow.domain.follow.domain.enums.FollowStatus;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
-
-import kr.flab.snapnow.domain.user.domain.enums.FollowStatus;
 
 @Getter
 @Setter
@@ -21,10 +21,14 @@ public class FullProfileModel {
     private int followerCount;
     private int followingCount;
 
+    private Long fromUserId;
     private FollowStatus followStatus;
+    private FollowNotification followNotification;
 
     public void setFollowStatus(FollowStatus followStatus) {
-        if (followStatus == null || followStatus == FollowStatus.BLOCKED) {
+        if (followStatus == null) {
+            this.followStatus = FollowStatus.SELF;
+        } else if (followStatus == FollowStatus.BLOCKED) {
             this.followStatus = FollowStatus.NONE;
         } else {
             this.followStatus = followStatus;

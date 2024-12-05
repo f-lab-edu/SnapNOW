@@ -6,7 +6,8 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
-import kr.flab.snapnow.domain.user.domain.enums.FollowStatus;
+import kr.flab.snapnow.domain.follow.domain.enums.FollowNotification;
+import kr.flab.snapnow.domain.follow.domain.enums.FollowStatus;
 
 @Getter
 @Builder
@@ -26,8 +27,9 @@ public class UserProfileResponse {
     private int followingCount;
     private String followingCountText;
 
+    private Long fromUserId;
     private FollowStatus followStatus;
-    // Todo: follower 알림 설정 필드 추가
+    private FollowNotification followNotification;
 
     public static class UserProfileResponseBuilder {
 
@@ -35,7 +37,7 @@ public class UserProfileResponse {
             // Todo: count 입력 시 단위에 따른 텍스트 변환 로직 추가 (builer override)
             return new UserProfileResponse(userId, userName, fullName, profileImageUrl, postCount,
                     postCountText, followerCount, followerCountText, followingCount,
-                    followingCountText, followStatus);
+                    followingCountText, fromUserId, followStatus, followNotification);
         }
     }
 }

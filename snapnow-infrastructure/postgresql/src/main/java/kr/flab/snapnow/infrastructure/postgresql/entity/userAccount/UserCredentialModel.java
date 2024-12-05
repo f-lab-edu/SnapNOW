@@ -11,7 +11,7 @@ import kr.flab.snapnow.domain.user.domain.enums.AuthProvider;
 @NoArgsConstructor
 public class UserCredentialModel {
 
-    private Long id;
+    private Long userId;
     private String email;
     private String password;
     private AuthProvider authProvider;
