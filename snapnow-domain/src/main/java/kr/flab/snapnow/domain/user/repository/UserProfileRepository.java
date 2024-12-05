@@ -5,11 +5,11 @@ import kr.flab.snapnow.domain.user.domain.model.userProfile.FullProfile;
 
 public interface UserProfileRepository {
 
-    UserProfile insert(UserProfile userProfile);
-
     UserProfile update(UserProfile userProfile);
 
     UserProfile find(Long userId);
+
+    UserProfile find(Long userId, Long targetUserId);
 
     FullProfile getFullProfile(Long targetId, Long userId);
 }

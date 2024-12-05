@@ -7,8 +7,6 @@ import kr.flab.snapnow.domain.user.domain.enums.setting.settingType.SettingType;
 
 public interface UserSettingRepository {
 
-    void insert(NotificationSettings notificationSetting, PrivacySettings privacySetting);
-
     void update(Long userId, SettingType settingType, SettingOption settingOption);
 
     NotificationSettings findNotificationSetting(Long userId);
