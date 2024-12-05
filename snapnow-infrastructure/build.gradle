@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+}
+
+group = 'kr.flab'
+version = '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+subprojects {
+	group = 'kr.flab.snapnow.infrastructure'
+	version = '0.0.1-SNAPSHOT'
+
+	repositories {
+		mavenCentral()
+	}
+
+	dependencies {
+		implementation project(':snapnow-core')
+        implementation project(':snapnow-domain')
+
+		testImplementation platform('org.junit:junit-bom:5.10.0')
+		testImplementation 'org.junit.jupiter:junit-jupiter'
+	}
+}
+
+
+test {
+    useJUnitPlatform()
+}
