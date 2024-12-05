@@ -1,5 +1,7 @@
 package kr.flab.snapnow.domain.user.service;
 
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 import kr.flab.snapnow.domain.user.useCase.AuthUseCase;
@@ -7,7 +9,10 @@ import kr.flab.snapnow.domain.user.domain.model.userAccount.UserAccount;
 import kr.flab.snapnow.domain.user.domain.model.userProfile.UserProfile;
 
 @Service
+@RequiredArgsConstructor
 public class AuthService implements AuthUseCase {
+
+    private final UserCredentialService userCredentialService;
 
     public void signUp(UserAccount userAccount, UserProfile userProfile) {
 
