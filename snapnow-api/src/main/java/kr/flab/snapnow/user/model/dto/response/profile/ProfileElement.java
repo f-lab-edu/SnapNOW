@@ -1,9 +1,9 @@
 package kr.flab.snapnow.user.model.dto.response.profile;
 
-import kr.flab.snapnow.domain.user.domain.enums.FollowStatus;
-
 import lombok.Getter;
 import lombok.Builder;
+
+import kr.flab.snapnow.domain.follow.domain.enums.FollowStatus;
 
 @Getter
 @Builder
