@@ -3,7 +3,7 @@ package kr.flab.snapnow.domain.user.domain.model.userProfile;
 import lombok.Getter;
 import lombok.Builder;
 
-import kr.flab.snapnow.domain.user.domain.enums.FollowStatus;
+import kr.flab.snapnow.domain.follow.domain.model.Follow;
 
 @Getter
 @Builder
@@ -15,31 +15,18 @@ public class FullProfile {
     private int followerCount;
     private int followingCount;
 
-    private FollowStatus followStatus;
+    private Follow follow;
 
     @Builder
-    protected FullProfile(
-            UserProfile userProfile,
-            int postCount, int followerCount, int followingCount, FollowStatus followStatus) {
-        if (followStatus == null) {
-            followStatus = FollowStatus.SELF;
+    protected FullProfile(UserProfile userProfile, int postCount, int followerCount,
+            int followingCount, Follow follow) {
+        if (follow == null) {
+            follow = Follow.builder().targetUserId(userProfile.getUserId()).build();
         }
 
         this.postCount = postCount;
         this.followerCount = followerCount;
         this.followingCount = followingCount;
-        this.followStatus = followStatus;
-    }
-
-    @Builder
-    protected FullProfile(Long userId, String userName, String fullName, String biography, String profileImageUrl,
-            int postCount, int followerCount, int followingCount, FollowStatus followStatus) {
-        this(UserProfile.builder()
-                .userId(userId)
-                .userName(userName)
-                .fullName(fullName)
-                .biography(biography)
-                .profileImageUrl(profileImageUrl)
-                .build(), postCount, followerCount, followingCount, followStatus);
+        this.follow = follow;
     }
 }
