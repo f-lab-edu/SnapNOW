@@ -2,7 +2,7 @@ package kr.flab.snapnow.domain.user.useCase;
 
 import kr.flab.snapnow.domain.user.domain.model.userAccount.UserAccountInfo;
 
-public interface AccountUseCase {
+public interface UserAccountUseCase {
 
     public UserAccountInfo getUserAccountInfo(Long userId);
 
