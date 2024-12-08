@@ -3,4 +3,7 @@ include 'snapnow-core'
 include 'snapnow-domain'
 include 'snapnow-api'
 include 'snapnow-notification'
+include 'snapnow-infrastructure'
+include 'snapnow-infrastructure:postgresql'
+findProject(':snapnow-infrastructure:postgresql')?.name = 'postgresql'
 
