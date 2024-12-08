@@ -21,6 +21,7 @@ public enum UserExceptionType implements ResultCode {
     AUTH_PROVIDER_CANNOT_BE_NULL("Auth provider cannot be null"),
     ACCOUNT_NOT_FOUND("Account not found"),
     ACCOUNT_ALREADY_EXISTS("Account already exists"),
+    EMAIL_NOT_VERIFIED("Email not verified"),
 
     // UserProfile
     USER_PROFILE_NOT_FOUND("User profile not found"),

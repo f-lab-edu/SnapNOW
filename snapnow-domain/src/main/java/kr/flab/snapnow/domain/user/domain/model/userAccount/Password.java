@@ -18,14 +18,14 @@ public class Password {
     public static String encode(String password) {
         return passwordEncoder.encode(password);
     }
-
-    public static boolean matches(String password, String encodedPassword) {
-        return passwordEncoder.matches(password, encodedPassword);
-    }
-
+    
     public Password(String password) {
         validatePassword(password);
         this.value = password;
+    }
+
+    public boolean matches(String password) {
+        return passwordEncoder.matches(password, this.value);
     }
 
     private void validatePassword(String password) {

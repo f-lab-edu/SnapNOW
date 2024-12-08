@@ -6,6 +6,8 @@ public interface UserCredentialUseCase {
 
     public UserCredential getCredential(Long userId);
 
+    public UserCredential getCredential(String email);
+
     public void sendVerificationCode(String email);
 
     public void verifyCode(String email, String code);

@@ -11,10 +11,6 @@ public class UserCredentialService implements UserCredentialUseCase {
         return null;
     }
 
-    public UserCredential getCredential(String email) {
-        return null;
-    }
-
     public void sendVerificationCode(String email) {
 
     }

@@ -45,6 +45,7 @@ public class Email {
 
     public boolean verifyCode(String code) {
         // TODO: 캐시에서 email에 맞는 code 조회. 일치하면 인증 완료 처리.
+        // Todo: 인증 완료 시 캐시에서 해당 코드 삭제 -> 인증 완료는 일회성
         if (!this.verifiedEmail) {
             this.verifiedEmail = true;
         }
