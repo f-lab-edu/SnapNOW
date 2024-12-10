@@ -6,6 +6,13 @@ build/
 !**/src/test/**/build/
 !**/src/main/**/application.properties
 
+.DS_Store
+**/.DS_Store
+
+### 개발하면서 끄적끄적... ###
+note
+notes/
+
 ### STS ###
 .apt_generated
 .classpath
