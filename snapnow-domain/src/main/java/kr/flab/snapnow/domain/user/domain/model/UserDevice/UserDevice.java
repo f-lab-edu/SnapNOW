@@ -20,6 +20,9 @@ public class UserDevice {
         if (devices == null) {
             throw new IllegalArgumentException("Devices are required");
         }
+        if (devices.size() > 5) {
+            throw new IllegalArgumentException("Device count exceeded (Max 5)");
+        }
     }
 }
 
