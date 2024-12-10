@@ -15,9 +15,11 @@ public class Device {
     private String deviceOs;
     private String deviceOsVersion;
 
+    private String refreshToken;
+
     @Builder
-    private Device(String deviceId, DeviceType deviceType,
-            String deviceModel, String deviceOs, String deviceOsVersion) {
+    private Device(String deviceId, DeviceType deviceType, String deviceModel,
+            String deviceOs, String deviceOsVersion, String refreshToken) {
         if (deviceId == null) {
             throw new IllegalArgumentException("Device ID is required");
         }
