@@ -1,16 +1,16 @@
 package kr.flab.snapnow.domain.user.domain.model.userAccount.credential;
 
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
+
 import kr.flab.snapnow.domain.user.domain.enums.account.AuthProvider;
-import lombok.Builder;
 
 @Getter
-@Builder
+@SuperBuilder
 public class OAuthCredential extends UserCredential {
 
     private String providerId;
 
-    @Builder
     private OAuthCredential(AuthProvider authProvider, String providerId, Email email) {
         super(authProvider, email);
         if (providerId == null) {
