@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Builder;
 
 import kr.flab.snapnow.domain.user.model.userAccount.UserAccount;
+import kr.flab.snapnow.domain.user.model.userDevice.UserDevice;
 import kr.flab.snapnow.domain.user.model.userProfile.UserProfile;
 import kr.flab.snapnow.domain.user.model.userSetting.UserSettings;
 import kr.flab.snapnow.domain.user.model.userSetting.NotificationSettings;
