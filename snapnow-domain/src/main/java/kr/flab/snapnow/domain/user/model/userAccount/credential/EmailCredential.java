@@ -11,8 +11,8 @@ public class EmailCredential extends UserCredential {
 
     private String password;
 
-    private EmailCredential(Email email, String password) {
-        super(AuthProvider.EMAIL, email);
+    private EmailCredential(Long userId, Email email, String password) {
+        super(userId, AuthProvider.EMAIL, email);
         if (password == null) {
             throw new IllegalArgumentException("Password is required");
         }

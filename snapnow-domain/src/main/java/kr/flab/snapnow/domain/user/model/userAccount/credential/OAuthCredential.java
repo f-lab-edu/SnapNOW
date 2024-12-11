@@ -11,8 +11,9 @@ public class OAuthCredential extends UserCredential {
 
     private String providerId;
 
-    private OAuthCredential(AuthProvider authProvider, String providerId, Email email) {
-        super(authProvider, email);
+    private OAuthCredential(Long userId, AuthProvider authProvider, String providerId,
+            Email email) {
+        super(userId, authProvider, email);
         if (providerId == null) {
             throw new IllegalArgumentException("Provider ID is required");
         }
