@@ -1,4 +1,4 @@
-package kr.flab.snapnow.domain.user.domain.model.UserDevice;
+package kr.flab.snapnow.domain.user.domain.model.userDevice;
 
 import java.util.List;
 
