@@ -12,7 +12,6 @@ import kr.flab.snapnow.domain.user.model.userProfile.UserProfile;
 import kr.flab.snapnow.domain.user.model.userSetting.UserSettings;
 import kr.flab.snapnow.domain.user.model.userSetting.NotificationSettings;
 import kr.flab.snapnow.domain.user.model.userSetting.PrivacySettings;
-import kr.flab.snapnow.domain.user.model.userDevice.UserDevice;
 
 @Getter
 @Builder
