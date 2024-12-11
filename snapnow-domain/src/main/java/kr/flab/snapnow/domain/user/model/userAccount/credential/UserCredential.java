@@ -9,10 +9,11 @@ import kr.flab.snapnow.domain.user.enums.account.AuthProvider;
 @SuperBuilder
 public abstract class UserCredential {
 
+    protected Long userId;
     protected AuthProvider authProvider;
     protected Email email;
 
-    protected UserCredential(AuthProvider authProvider, Email email) {
+    protected UserCredential(Long userId, AuthProvider authProvider, Email email) {
         if (authProvider == null) {
             throw new IllegalArgumentException("Auth provider is required");
         }
