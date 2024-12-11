@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import kr.flab.snapnow.core.exception.ForbiddenException;
 import kr.flab.snapnow.domain.user.model.User;
 import kr.flab.snapnow.application.user.output.UserOutputPort;
+import kr.flab.snapnow.application.email.VerificationType;
 import kr.flab.snapnow.application.email.output.EmailVerificationOutputPort;
 import kr.flab.snapnow.application.user.fixture.UserFixture;
 
@@ -49,7 +50,7 @@ public class UserSerivceT {
         User user = UserFixture.createUser();
         when(emailVerificationOutputPort.isSuccess(
             user.getAccount().getCredential().getEmail().getValue(),
-            "Verification Code")).thenReturn(false);
+            VerificationType.SIGNUP)).thenReturn(false);
 
         // when & then
         assertThrows(ForbiddenException.class, () -> userService.signUp(user));

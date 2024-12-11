@@ -1,12 +1,14 @@
 package kr.flab.snapnow.application.email.output;
 
+import kr.flab.snapnow.application.email.VerificationType;
+
 public interface EmailVerificationOutputPort {
 
     void insert(String email, String code, String subject);
 
-    boolean isSuccess(String email, String subject);
+    boolean isSuccess(String email, VerificationType type);
 
-    String getVerificationCode(String email, String subject);
+    String getVerificationCode(String email, VerificationType type);
 
     void updateSuccess(String email, String subject);
 
