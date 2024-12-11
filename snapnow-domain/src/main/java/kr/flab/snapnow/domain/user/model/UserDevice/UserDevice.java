@@ -14,9 +14,6 @@ public class UserDevice {
 
     @Builder
     private UserDevice(Long userId, List<Device> devices) {
-        if (userId == null) {
-            throw new IllegalArgumentException("User ID is required");
-        }
         if (devices == null) {
             throw new IllegalArgumentException("Devices are required");
         }
