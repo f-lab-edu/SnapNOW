@@ -10,6 +10,7 @@ public enum ExceptionType implements ResultCode {
     BAD_REQUEST("Bad Request"),
     UNAUTHORIZED("Unauthorized request"),
     NOT_FOUND("Resource not found"),
+    FORBIDDEN("Forbidden"),
     ;
 
     private final String message;
