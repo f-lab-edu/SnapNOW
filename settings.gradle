@@ -1,5 +1,6 @@
 rootProject.name = 'snapnow'
 include 'snapnow-core'
+include 'snapnow-application'
 include 'snapnow-domain'
 include 'snapnow-api'
 include 'snapnow-notification'
