@@ -74,8 +74,7 @@ public class UserSerivceT {
         String password = "password";
         EmailCredential credential = UserFixture.createEmailCredential();
 
-        System.out.println("credential.getAuthProvider(): " + credential.getAuthProvider());
-        when(credentialService.getCredential(userId)).thenReturn(credential);
+        when(credentialService.get(userId)).thenReturn(credential);
         when(credentialService.isPasswordMatch(userId, password)).thenReturn(true);
 
         // when & then
@@ -90,7 +89,7 @@ public class UserSerivceT {
         String deleteReason = "test";
         OAuthCredential credential = UserFixture.createOAuthCredential();
 
-        when(credentialService.getCredential(userId)).thenReturn(credential);
+        when(credentialService.get(userId)).thenReturn(credential);
         when(emailService.isSuccess(credential.getEmail(), VerificationType.DELETE_ID))
             .thenReturn(true);
 

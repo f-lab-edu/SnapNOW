@@ -32,6 +32,12 @@ public class CredentialService implements GetCredentialUseCase, UpdatePasswordUs
         return passwordService.isPasswordMatch(userCredential.getPassword(), password);
     }
 
+    public boolean isPasswordMatch(Email email, String password) {
+        EmailCredential userCredential = (EmailCredential) credentialOutputPort.get(email);
+
+        return passwordService.isPasswordMatch(userCredential.getPassword(), password);
+    }
+
     public void updatePassword(Long userId, String originalPassword, String newPassword) {
         EmailCredential userCredential = (EmailCredential) credentialOutputPort.get(userId);
 
