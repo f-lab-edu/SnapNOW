@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import kr.flab.snapnow.application.auth.output.CredentialOutputPort;
 import kr.flab.snapnow.application.auth.usecase.GetCredentialUseCase;
 import kr.flab.snapnow.application.auth.usecase.UpdatePasswordUseCase;
+import kr.flab.snapnow.domain.user.model.userAccount.credential.Email;
 import kr.flab.snapnow.domain.user.model.userAccount.credential.EmailCredential;
 import kr.flab.snapnow.domain.user.model.userAccount.credential.UserCredential;
 
@@ -17,8 +18,12 @@ public class CredentialService implements GetCredentialUseCase, UpdatePasswordUs
     private final CredentialOutputPort credentialOutputPort;
     private final PasswordService passwordService;
 
-    public UserCredential getCredential(Long userId) {
+    public UserCredential get(Long userId) {
         return credentialOutputPort.get(userId);
+    }
+
+    public UserCredential get(Email email) {
+        return credentialOutputPort.get(email);
     }
 
     public boolean isPasswordMatch(Long userId, String password) {
