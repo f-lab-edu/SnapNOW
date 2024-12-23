@@ -6,14 +6,17 @@ import org.springframework.stereotype.Service;
 
 import kr.flab.snapnow.domain.auth.Token;
 import kr.flab.snapnow.domain.user.model.userAccount.credential.Email;
+import kr.flab.snapnow.application.auth.jwt.JwtProvider;
+import kr.flab.snapnow.application.auth.service.DeviceCredentialService;
 import kr.flab.snapnow.application.auth.usecase.AuthUseCase;
-import kr.flab.snapnow.application.auth.output.TokenOutputPort;
 
 @Service
 @RequiredArgsConstructor
 public class AuthService implements AuthUseCase {
 
-    private final TokenOutputPort tokenOutputPort;
+    private final JwtProvider jwtProvider;
+    private final CredentialService credentialService;
+    private final DeviceCredentialService deviceCredentialService;
 
     public Token signIn(Email email, String password, String deviceId) {
         return null;
