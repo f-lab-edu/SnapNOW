@@ -19,7 +19,7 @@ public class AuthService implements AuthUseCase {
         return null;
     }
 
-    public Token issue(Email email, String deviceId) {
+    public Token issue(Long userId, String deviceId) {
         return null;
     }
 
@@ -27,7 +27,7 @@ public class AuthService implements AuthUseCase {
         return null;
     }
 
-    public void signOut(Email email, String deviceId) {
+    public void signOut(Long userId, String deviceId) {
     }
 }
 
