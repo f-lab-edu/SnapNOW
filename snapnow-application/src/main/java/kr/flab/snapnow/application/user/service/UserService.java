@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import kr.flab.snapnow.core.exception.BadRequestException;
 import kr.flab.snapnow.core.exception.ForbiddenException;
 import kr.flab.snapnow.domain.auth.Token;
-import kr.flab.snapnow.domain.auth.exception.UserNotMatchPasswordException;
+import kr.flab.snapnow.domain.auth.exception.WrongPasswordException;
 import kr.flab.snapnow.domain.user.enums.account.AuthProvider;
 import kr.flab.snapnow.domain.user.model.User;
 import kr.flab.snapnow.domain.user.model.userAccount.credential.Email;
@@ -31,6 +31,7 @@ public class UserService implements SignUpUseCase, DeleteIdUseCase {
     private final UserOutputPort userOutputPort;
 
     public Token signUp(User user) {
+        Long userId = user.getUserId();
         Email email = user.getAccount().getCredential().getEmail();
         Device device = user.getUserDevice().getDevices().get(0);
 
@@ -40,7 +41,7 @@ public class UserService implements SignUpUseCase, DeleteIdUseCase {
         }
 
         userOutputPort.insert(user);
-        return authService.issue(email, device.getDeviceId());
+        return authService.issue(userId, device.getDeviceId());
     }
 
     public void deleteEmailUser(Long userId, String password, String deleteReason) {
@@ -50,7 +51,7 @@ public class UserService implements SignUpUseCase, DeleteIdUseCase {
             throw new BadRequestException("This request is not allowed for OAuth users");
         }
         if (!credentialService.isPasswordMatch(userId, password)) {
-            throw new UserNotMatchPasswordException();
+            throw new WrongPasswordException();
         }
 
         delete(userId, deleteReason);
