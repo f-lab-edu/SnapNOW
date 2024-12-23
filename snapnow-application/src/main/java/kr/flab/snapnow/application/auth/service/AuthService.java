@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 import kr.flab.snapnow.domain.auth.Token;
 import kr.flab.snapnow.domain.user.model.userAccount.credential.Email;
 import kr.flab.snapnow.domain.user.model.userAccount.credential.EmailCredential;
+import kr.flab.snapnow.application.auth.jwt.TokenPayload;
 import kr.flab.snapnow.application.auth.jwt.JwtProvider;
 import kr.flab.snapnow.application.auth.service.DeviceCredentialService;
 import kr.flab.snapnow.application.auth.usecase.AuthUseCase;
+import kr.flab.snapnow.domain.auth.exception.WrongPasswordException;
 
 @Service
 @RequiredArgsConstructor
@@ -20,11 +22,21 @@ public class AuthService implements AuthUseCase {
     private final DeviceCredentialService deviceCredentialService;
 
     public Token signIn(Email email, String password, String deviceId) {
-        EmailCredential userCredential = (EmailCredential) credentialService.get(email);
-
-        if (!credentialService.isPasswordMatch(userCredential.getUserId(), password)) {
+        if (!credentialService.isPasswordMatch(email, password)) {
             throw new WrongPasswordException();
         }
+        EmailCredential userCredential = (EmailCredential) credentialService.get(email);
+
+        TokenPayload payload = TokenPayload.builder()
+            .userId(userCredential.getUserId())
+            .deviceId(deviceId)
+            .build();
+        String accessToken = jwtProvider.createAccessToken(payload);
+        String refreshToken = jwtProvider.createRefreshToken(payload);
+
+        deviceCredentialService.login(userCredential.getUserId(), deviceId, refreshToken);
+
+        return new Token(accessToken, refreshToken);
     }
 
     public Token issue(Long userId, String deviceId) {
