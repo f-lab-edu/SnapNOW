@@ -84,6 +84,13 @@ public class UserService implements SignUpUseCase, DeleteIdUseCase {
     }
 
     private void delete(Long userId, String deleteReason) {
+        // TODO: UserCredential, UserDevice, UserSetting, UserProfile, UserAccount 모두 삭제
+        // TODO: follow, post 비동기 삭제
+        List<DeviceCredential> deviceCredentials = deviceCredentialService.getAll(userId);
+
+        for (DeviceCredential deviceCredential : deviceCredentials) {
+            deviceCredentialService.delete(userId, deviceCredential.getDeviceId());
+        }
         userOutputPort.delete(userId, deleteReason);
     }
 }
