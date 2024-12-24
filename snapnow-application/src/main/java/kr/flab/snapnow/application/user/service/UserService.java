@@ -7,11 +7,10 @@ import org.springframework.stereotype.Service;
 import kr.flab.snapnow.core.exception.BadRequestException;
 import kr.flab.snapnow.core.exception.ForbiddenException;
 import kr.flab.snapnow.domain.auth.Token;
-import kr.flab.snapnow.domain.auth.exception.UserNotMatchPasswordException;
+import kr.flab.snapnow.domain.auth.exception.WrongPasswordException;
 import kr.flab.snapnow.domain.user.enums.account.AuthProvider;
 import kr.flab.snapnow.domain.user.model.User;
-import kr.flab.snapnow.domain.user.model.userAccount.credential.Email;
-import kr.flab.snapnow.domain.user.model.userAccount.credential.UserCredential;
+import kr.flab.snapnow.domain.user.model.userAccount.credential.*;
 import kr.flab.snapnow.domain.user.model.userDevice.Device;
 import kr.flab.snapnow.application.user.usecase.DeleteIdUseCase;
 import kr.flab.snapnow.application.user.usecase.SignUpUseCase;
@@ -40,24 +39,24 @@ public class UserService implements SignUpUseCase, DeleteIdUseCase {
         }
 
         userOutputPort.insert(user);
-        return authService.issue(email, device.getDeviceId());
+        return authService.signIn(email, ((EmailCredential) user.getAccount().getCredential()).getPassword(), device.getDeviceId());
     }
 
     public void deleteEmailUser(Long userId, String password, String deleteReason) {
-        UserCredential credential = credentialService.getCredential(userId);
+        EmailCredential credential = (EmailCredential) credentialService.get(userId);
 
         if (credential.getAuthProvider() != AuthProvider.EMAIL) {
             throw new BadRequestException("This request is not allowed for OAuth users");
         }
         if (!credentialService.isPasswordMatch(userId, password)) {
-            throw new UserNotMatchPasswordException();
+            throw new WrongPasswordException();
         }
 
         delete(userId, deleteReason);
     }
 
     public void deleteOAuthUser(Long userId, String deleteReason) {
-        UserCredential credential = credentialService.getCredential(userId);
+        OAuthCredential credential = (OAuthCredential) credentialService.get(userId);
 
         if (credential.getAuthProvider() == AuthProvider.EMAIL) {
             throw new BadRequestException("This request is not allowed for email users");

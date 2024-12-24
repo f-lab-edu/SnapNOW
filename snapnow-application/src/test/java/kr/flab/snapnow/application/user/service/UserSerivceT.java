@@ -46,9 +46,10 @@ public class UserSerivceT {
         when(emailService.isSuccess(
             user.getAccount().getCredential().getEmail(),
             VerificationType.SIGNUP)).thenReturn(true);
-        when(authService.issue(
-            user.getAccount().getCredential().getEmail(),
-            user.getUserDevice().getDevices().get(0).getDeviceId()))
+        when(authService.signIn(
+                user.getAccount().getCredential().getEmail(),
+                ((EmailCredential) user.getAccount().getCredential()).getPassword(),
+                user.getUserDevice().getDevices().get(0).getDeviceId()))
             .thenReturn(new Token("accessToken", "refreshToken"));
 
         // when & then
@@ -74,8 +75,7 @@ public class UserSerivceT {
         String password = "password";
         EmailCredential credential = UserFixture.createEmailCredential();
 
-        System.out.println("credential.getAuthProvider(): " + credential.getAuthProvider());
-        when(credentialService.getCredential(userId)).thenReturn(credential);
+        when(credentialService.get(userId)).thenReturn(credential);
         when(credentialService.isPasswordMatch(userId, password)).thenReturn(true);
 
         // when & then
@@ -90,7 +90,7 @@ public class UserSerivceT {
         String deleteReason = "test";
         OAuthCredential credential = UserFixture.createOAuthCredential();
 
-        when(credentialService.getCredential(userId)).thenReturn(credential);
+        when(credentialService.get(userId)).thenReturn(credential);
         when(emailService.isSuccess(credential.getEmail(), VerificationType.DELETE_ID))
             .thenReturn(true);
 

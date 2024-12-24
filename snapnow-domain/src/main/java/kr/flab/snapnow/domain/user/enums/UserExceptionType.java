@@ -13,11 +13,6 @@ public enum UserExceptionType implements ResultCode {
     DELETED_USER("Deleted user"),
     USER_ALREADY_EXISTS("User already exists"),
 
-    // UserAccount
-    EMAIL_AUTH_ATTEMPT_EXCEEDED("Email auth attempt exceeded"),
-    INVALID_VERIFICATION_CODE("Invalid verification code"),
-    EMAIL_NOT_VERIFIED("Email not verified"),
-
     // UserProfile
     USER_NAME_ALREADY_EXISTS("User name already exists"),
 
