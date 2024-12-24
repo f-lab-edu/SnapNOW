@@ -1,6 +1,7 @@
 package kr.flab.snapnow.domain.auth;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import lombok.Getter;
 import lombok.Builder;
@@ -57,6 +58,17 @@ public class DeviceCredential {
             throw new LogoutDeviceException();
         }
         this.refreshToken = refreshToken;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+
+        DeviceCredential that = (DeviceCredential) obj;
+        return Objects.equals(userId, that.userId) &&
+                Objects.equals(deviceId, that.deviceId);
     }
 }
 
