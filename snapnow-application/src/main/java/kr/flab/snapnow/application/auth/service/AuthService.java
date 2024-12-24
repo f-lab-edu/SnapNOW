@@ -22,6 +22,8 @@ public class AuthService implements AuthUseCase {
     private final CredentialService credentialService;
     private final DeviceCredentialService deviceCredentialService;
 
+    // TODO: OAuth Login 추가
+
     public Token signIn(Email email, String password, String deviceId) {
         if (!credentialService.isPasswordMatch(email, password)) {
             throw new WrongPasswordException();
