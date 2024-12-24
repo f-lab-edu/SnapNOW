@@ -89,13 +89,12 @@ public class AuthServiceT {
             .issuedAt(new Date())
             .build();
         Token token = jwtProvider.createToken(tokenPayload);
-        when(deviceCredentialService.isLogin(userId, deviceId)).thenReturn(true);
 
         //when
         Token newToken = authService.reissue(token, deviceId);
 
         //then
-        verify(deviceCredentialService).updateRefreshToken(userId, deviceId, token.getRefreshToken());
+        verify(deviceCredentialService).reissue(userId, deviceId, token.getRefreshToken());
         assertEquals(jwtProvider.getPayload(newToken.getAccessToken()).getUserId(), tokenPayload.getUserId());
         assertEquals(jwtProvider.getPayload(newToken.getAccessToken()).getDeviceId(), tokenPayload.getDeviceId());
         assertEquals(jwtProvider.getPayload(newToken.getRefreshToken()).getUserId(), tokenPayload.getUserId());
