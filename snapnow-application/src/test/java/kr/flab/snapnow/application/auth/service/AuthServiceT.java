@@ -5,22 +5,23 @@ import static org.mockito.Mockito.verify;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Date;
+import java.lang.reflect.Field;
 
 import org.mockito.Mock;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
-import kr.flab.snapnow.domain.auth.Token;
 import kr.flab.snapnow.application.auth.jwt.JwtProvider;
 import kr.flab.snapnow.application.auth.jwt.TokenPayload;
+import kr.flab.snapnow.domain.auth.Token;
 import kr.flab.snapnow.domain.user.model.userAccount.credential.Email;
+import kr.flab.snapnow.domain.user.model.userAccount.credential.EmailCredential;
 
 public class AuthServiceT {
 
-    private JwtProvider jwtProvider = new JwtProvider();
+    private JwtProvider jwtProvider;
 
     @Mock
     private CredentialService credentialService;
@@ -32,8 +33,21 @@ public class AuthServiceT {
     private AuthService authService;
 
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws NoSuchFieldException, IllegalAccessException {
         MockitoAnnotations.openMocks(this);
+        jwtProvider = new JwtProvider();
+        authService = new AuthService(jwtProvider, credentialService, deviceCredentialService);
+
+        Field secretKeyfield = JwtProvider.class.getDeclaredField("secretKey");
+        secretKeyfield.setAccessible(true);
+        secretKeyfield.set(jwtProvider,
+                "SecretKeyForTestakfjafafkdfkajfldjfdfldafjdalfkdlfjdlkfjakfldjklfjdfdkfafdjaf");
+        Field accessTokenExpirationField = JwtProvider.class.getDeclaredField("accessTokenExpiration");
+        accessTokenExpirationField.setAccessible(true);
+        accessTokenExpirationField.set(jwtProvider, 3600L);
+        Field refreshTokenExpirationField = JwtProvider.class.getDeclaredField("refreshTokenExpiration");
+        refreshTokenExpirationField.setAccessible(true);
+        refreshTokenExpirationField.set(jwtProvider, 86400L);
     }
 
     @Test
@@ -43,8 +57,15 @@ public class AuthServiceT {
         Email email = new Email("test@test.com");
         String password = "password";
         String deviceId = "deviceId";
-        when(credentialService
-                .isPasswordMatch(userId, password)).thenReturn(true);
+        EmailCredential credential = EmailCredential.builder()
+            .userId(userId)
+            .email(email)
+            .password(password)
+            .build();
+
+        when(credentialService.get(email)).thenReturn(credential);
+        when(credentialService.isPasswordMatch(email, password))
+            .thenReturn(true);
 
         // when
         Token token = authService.signIn(email, password, deviceId);
