@@ -3,16 +3,18 @@ package kr.flab.snapnow.application.auth.service;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.flab.snapnow.domain.auth.Token;
+import kr.flab.snapnow.domain.auth.exception.WrongPasswordException;
 import kr.flab.snapnow.domain.user.model.userAccount.credential.Email;
 import kr.flab.snapnow.domain.user.model.userAccount.credential.EmailCredential;
 import kr.flab.snapnow.application.auth.jwt.TokenPayload;
 import kr.flab.snapnow.application.auth.jwt.JwtProvider;
 import kr.flab.snapnow.application.auth.usecase.AuthUseCase;
-import kr.flab.snapnow.domain.auth.exception.WrongPasswordException;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class AuthService implements AuthUseCase {
 
