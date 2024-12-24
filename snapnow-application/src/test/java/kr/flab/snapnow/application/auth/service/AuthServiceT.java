@@ -91,7 +91,7 @@ public class AuthServiceT {
         Token token = jwtProvider.createToken(tokenPayload);
 
         //when
-        Token newToken = authService.reissue(token, deviceId);
+        Token newToken = authService.reissue(token);
 
         //then
         verify(deviceCredentialService).reissue(userId, deviceId, token.getRefreshToken());

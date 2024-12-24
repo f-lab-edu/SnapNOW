@@ -41,7 +41,7 @@ public class AuthService implements AuthUseCase {
         return token;
     }
 
-    public Token reissue(Token token, String deviceId) {
+    public Token reissue(Token token) {
         TokenPayload payload = jwtProvider.getPayload(token.getAccessToken());
         TokenPayload refreshTokenPayload = jwtProvider.getPayload(token.getRefreshToken());
 
@@ -50,8 +50,9 @@ public class AuthService implements AuthUseCase {
             throw new InvalidTokenException("Access token and refresh token are not matched");
         }
 
-        Token newToken = issue(payload.getUserId(), deviceId);
-        deviceCredentialService.reissue(payload.getUserId(), deviceId, newToken.getRefreshToken());
+        Token newToken = issue(payload.getUserId(), payload.getDeviceId());
+        deviceCredentialService.reissue(
+            payload.getUserId(), payload.getDeviceId(), newToken.getRefreshToken());
 
         return newToken;
     }
