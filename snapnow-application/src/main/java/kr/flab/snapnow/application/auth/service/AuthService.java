@@ -1,11 +1,15 @@
 package kr.flab.snapnow.application.auth.service;
 
+import java.util.Date;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.flab.snapnow.domain.auth.Token;
+import kr.flab.snapnow.domain.auth.exception.LogoutDeviceException;
+import kr.flab.snapnow.domain.auth.exception.InvalidTokenException;
 import kr.flab.snapnow.domain.auth.exception.WrongPasswordException;
 import kr.flab.snapnow.domain.user.model.userAccount.credential.Email;
 import kr.flab.snapnow.domain.user.model.userAccount.credential.EmailCredential;
@@ -39,9 +43,23 @@ public class AuthService implements AuthUseCase {
     }
 
     public Token reissue(Token token, String deviceId) {
-        return null;
+        TokenPayload payload = jwtProvider.getPayload(token.getAccessToken());
+        TokenPayload refreshTokenPayload = jwtProvider.getPayload(token.getRefreshToken());
+
+        if (!payload.getUserId().equals(refreshTokenPayload.getUserId()) 
+            || !payload.getDeviceId().equals(refreshTokenPayload.getDeviceId())) {
+            throw new InvalidTokenException("Access token and refresh token are not matched");
+        }
+        if (!deviceCredentialService.isLogin(payload.getUserId(), deviceId)) {
+            throw new LogoutDeviceException();
+        }
+
+        Token newToken = issue(payload.getUserId(), deviceId);
+        deviceCredentialService.updateRefreshToken(payload.getUserId(), deviceId, newToken.getRefreshToken());
+
+        return newToken;
     }
-    
+
     public void signOut(Long userId, String deviceId) {
         deviceCredentialService.logout(userId, deviceId);
     }
@@ -50,6 +68,7 @@ public class AuthService implements AuthUseCase {
         TokenPayload payload = TokenPayload.builder()
             .userId(userId)
             .deviceId(deviceId)
+            .issuedAt(new Date())
             .build();
 
         return jwtProvider.createToken(payload);
