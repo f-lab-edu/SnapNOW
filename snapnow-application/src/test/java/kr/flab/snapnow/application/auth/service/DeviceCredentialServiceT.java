@@ -116,4 +116,13 @@ public class DeviceCredentialServiceT {
         assertThrows(LogoutDeviceException.class,
                 () -> deviceCredentialService.reissue(userId, deviceId, "newRefreshToken"));
     }
+
+    @Test
+    void delete() {
+        // when
+        deviceCredentialService.delete(userId, deviceId);
+
+        // then
+        verify(deviceCredentialOutputPort).delete(userId, deviceId);
+    }
 }

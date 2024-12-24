@@ -48,4 +48,8 @@ public class DeviceCredentialService {
         deviceCredential.reissue(refreshToken);
         deviceCredentialOutputPort.update(deviceCredential);
     }
+
+    public void delete(Long userId, String deviceId) {
+        deviceCredentialOutputPort.delete(userId, deviceId);
+    }
 }
