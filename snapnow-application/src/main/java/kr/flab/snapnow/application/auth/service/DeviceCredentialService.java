@@ -27,6 +27,6 @@ public class DeviceCredentialService {
     public void logout(Long userId, String deviceId) {
     }
 
-    public void reissue(Long userId, String deviceId, String refreshToken) {
+    public void updateRefreshToken(Long userId, String deviceId, String refreshToken) {
     }
 }
