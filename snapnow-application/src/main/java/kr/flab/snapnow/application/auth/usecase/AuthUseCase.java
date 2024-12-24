@@ -7,8 +7,6 @@ public interface AuthUseCase {
 
     Token signIn(Email email, String password, String deviceId);
 
-    Token issue(Long userId, String deviceId);
-
     Token reissue(Token token, String deviceId);
 
     void signOut(Long userId, String deviceId);

@@ -46,9 +46,10 @@ public class UserSerivceT {
         when(emailService.isSuccess(
             user.getAccount().getCredential().getEmail(),
             VerificationType.SIGNUP)).thenReturn(true);
-        when(authService.issue(
-            user.getUserId(),
-            user.getUserDevice().getDevices().get(0).getDeviceId()))
+        when(authService.signIn(
+                user.getAccount().getCredential().getEmail(),
+                ((EmailCredential) user.getAccount().getCredential()).getPassword(),
+                user.getUserDevice().getDevices().get(0).getDeviceId()))
             .thenReturn(new Token("accessToken", "refreshToken"));
 
         // when & then

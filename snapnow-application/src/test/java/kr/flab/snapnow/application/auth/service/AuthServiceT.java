@@ -79,23 +79,6 @@ public class AuthServiceT {
     }
 
     @Test
-    void issue() {
-        // given
-        Long userId = 1L;
-        String deviceId = "deviceId";
-
-        //when
-        Token token = authService.issue(userId, deviceId);
-
-        //then
-        verify(deviceCredentialService).reissue(userId, deviceId, token.getRefreshToken());
-        assertEquals(jwtProvider.getPayload(token.getAccessToken()).getUserId(), userId);
-        assertEquals(jwtProvider.getPayload(token.getAccessToken()).getDeviceId(), deviceId);
-        assertEquals(jwtProvider.getPayload(token.getRefreshToken()).getUserId(), userId);
-        assertEquals(jwtProvider.getPayload(token.getRefreshToken()).getDeviceId(), deviceId);
-    }
-
-    @Test
     void reissue() {
         // given
         Long userId = 1L;

@@ -28,27 +28,29 @@ public class AuthService implements AuthUseCase {
         }
         EmailCredential userCredential = (EmailCredential) credentialService.get(email);
 
-        TokenPayload payload = TokenPayload.builder()
-            .userId(userCredential.getUserId())
-            .deviceId(deviceId)
-            .build();
-        String accessToken = jwtProvider.createAccessToken(payload);
-        String refreshToken = jwtProvider.createRefreshToken(payload);
+        Token token = issue(userCredential.getUserId(), deviceId);
 
-        deviceCredentialService.login(userCredential.getUserId(), deviceId, refreshToken);
+        deviceCredentialService.login(
+            userCredential.getUserId(), deviceId, token.getRefreshToken());
 
-        return new Token(accessToken, refreshToken);
-    }
-
-    public Token issue(Long userId, String deviceId) {
-        return null;
+        return token;
     }
 
     public Token reissue(Token token, String deviceId) {
         return null;
     }
-
+    
     public void signOut(Long userId, String deviceId) {
+        deviceCredentialService.logout(userId, deviceId);
+    }
+
+    private Token issue(Long userId, String deviceId) {
+        TokenPayload payload = TokenPayload.builder()
+            .userId(userId)
+            .deviceId(deviceId)
+            .build();
+
+        return jwtProvider.createToken(payload);
     }
 }
 
