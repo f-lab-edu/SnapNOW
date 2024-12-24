@@ -30,7 +30,6 @@ public class UserService implements SignUpUseCase, DeleteIdUseCase {
     private final UserOutputPort userOutputPort;
 
     public Token signUp(User user) {
-        Long userId = user.getUserId();
         Email email = user.getAccount().getCredential().getEmail();
         Device device = user.getUserDevice().getDevices().get(0);
 
@@ -40,7 +39,7 @@ public class UserService implements SignUpUseCase, DeleteIdUseCase {
         }
 
         userOutputPort.insert(user);
-        return authService.issue(userId, device.getDeviceId());
+        return authService.signIn(email, ((EmailCredential) user.getAccount().getCredential()).getPassword(), device.getDeviceId());
     }
 
     public void deleteEmailUser(Long userId, String password, String deleteReason) {
