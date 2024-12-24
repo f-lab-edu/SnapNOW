@@ -2,9 +2,12 @@ package kr.flab.snapnow.application.auth.service;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
+import kr.flab.snapnow.domain.auth.exception.InvalidPasswordException;
 import kr.flab.snapnow.domain.user.model.userAccount.credential.Email;
 import kr.flab.snapnow.domain.user.model.userAccount.credential.EmailCredential;
 
@@ -31,7 +34,7 @@ public class PasswordServiceT {
         String password = "abcd1234";
         String newPassword = "1234abcd";
         Email email = new Email("test@test.com");
-        String encodedPassword = passwordService.encodePassword(password);
+        String encodedPassword = passwordService.validateAndEncodePassword(password);
         EmailCredential credential = EmailCredential.builder()
             .userId(1L)
             .email(email)
@@ -48,22 +51,22 @@ public class PasswordServiceT {
     @Test
     void isValidPassword() {
         // Valid password
-        assertTrue(passwordService.isValidPassword("abcd1234"));
+        assertNotNull(passwordService.validateAndEncodePassword("abcd1234"));
 
         // Need at least one alphabet
-        assertFalse(passwordService.isValidPassword("12345678"));
+        assertThrows(InvalidPasswordException.class, () -> passwordService.validateAndEncodePassword("12345678"));
         // Need at least one number
-        assertFalse(passwordService.isValidPassword("abcdefgh"));
+        assertThrows(InvalidPasswordException.class, () -> passwordService.validateAndEncodePassword("abcdefgh"));
         // Need at least 8 characters
-        assertFalse(passwordService.isValidPassword("a1b2c3"));
+        assertThrows(InvalidPasswordException.class, () -> passwordService.validateAndEncodePassword("a1b2c3"));
         // Need at most 15 characters
-        assertFalse(passwordService.isValidPassword("a1b2c3d4e5f6g7h8i9j10"));
+        assertThrows(InvalidPasswordException.class, () -> passwordService.validateAndEncodePassword("a1b2c3d4e5f6g7h8i9j10"));
     }
 
     @Test
     void encodePassword() {
         String password = "abcd1234";
-        String encodedPassword = passwordService.encodePassword(password);
+        String encodedPassword = passwordService.validateAndEncodePassword(password);
 
         assertTrue(passwordService.isPasswordMatch(password, encodedPassword));
     }
@@ -71,7 +74,7 @@ public class PasswordServiceT {
     @Test
     void isPasswordMatch() {
         String password = "abcd1234";   
-        String encodedPassword = passwordService.encodePassword(password);
+        String encodedPassword = passwordService.validateAndEncodePassword(password);
 
         assertTrue(passwordService.isPasswordMatch(password, encodedPassword));
 

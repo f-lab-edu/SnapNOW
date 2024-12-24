@@ -33,17 +33,17 @@ public class PasswordService {
         credential.updatePassword(encodedNewPassword);
     }
 
-    public boolean isValidPassword(String password) {
+    public boolean isPasswordMatch(String passwordToMatch, String password) {
+        return passwordEncoder.matches(passwordToMatch, password);
+    }
+
+    private boolean isValidPassword(String password) {
         return password.length() >= 8 && password.length() <= 15
                 && password.matches(".*[a-zA-Z].*")
                 && password.matches(".*\\d.*");
     }
 
-    public String encodePassword(String password) {
+    private String encodePassword(String password) {
         return passwordEncoder.encode(password);
-    }
-
-    public boolean isPasswordMatch(String passwordToMatch, String password) {
-        return passwordEncoder.matches(passwordToMatch, password);
     }
 }
