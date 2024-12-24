@@ -51,6 +51,15 @@ public class DeviceCredentialServiceT {
     }
 
     @Test
+    void insert() {
+        // when
+        deviceCredentialService.insert(deviceCredential);
+
+        // then
+        verify(deviceCredentialOutputPort).insert(deviceCredential);
+    }
+
+    @Test
     void get() {
         // when
         DeviceCredential result = deviceCredentialService.get(userId, deviceId);

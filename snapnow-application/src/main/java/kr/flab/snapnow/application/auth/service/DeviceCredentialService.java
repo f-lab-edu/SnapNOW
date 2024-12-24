@@ -14,6 +14,10 @@ public class DeviceCredentialService {
 
     private final DeviceCredentialOutputPort deviceCredentialOutputPort;
 
+    public void insert(DeviceCredential deviceCredential) {
+        deviceCredentialOutputPort.insert(deviceCredential);
+    }
+
     public DeviceCredential get(Long userId, String deviceId) {
         return deviceCredentialOutputPort.get(userId, deviceId);
     }

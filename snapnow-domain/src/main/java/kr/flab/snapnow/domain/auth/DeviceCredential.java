@@ -21,9 +21,6 @@ public class DeviceCredential {
 
     private DeviceCredential(Long id, Long userId, String deviceId,
             String refreshToken, LoginStatus loginStatus, LocalDateTime logTime) {
-        if (id == null) {
-            throw new IllegalArgumentException("Device credential ID is required");
-        }
         if (userId == null) {
             throw new IllegalArgumentException("Device Credentail requires User ID");
         }
