@@ -9,7 +9,6 @@ import kr.flab.snapnow.domain.user.model.userAccount.credential.Email;
 import kr.flab.snapnow.domain.user.model.userAccount.credential.EmailCredential;
 import kr.flab.snapnow.application.auth.jwt.TokenPayload;
 import kr.flab.snapnow.application.auth.jwt.JwtProvider;
-import kr.flab.snapnow.application.auth.service.DeviceCredentialService;
 import kr.flab.snapnow.application.auth.usecase.AuthUseCase;
 import kr.flab.snapnow.domain.auth.exception.WrongPasswordException;
 
