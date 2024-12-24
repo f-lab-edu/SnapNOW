@@ -39,7 +39,7 @@ public class JwtProvider {
             .addClaims(Map.of("deviceId", payload.getDeviceId()))
             .setIssuedAt(payload.getIssuedAt())
             .setExpiration(new Date(System.currentTimeMillis() + accessTokenExpiration))
-            .signWith(SignatureAlgorithm.HS256, secretKey)
+            .signWith(SignatureAlgorithm.HS256, secretKey.getBytes())
             .compact();
     }
 
@@ -49,7 +49,7 @@ public class JwtProvider {
             .addClaims(Map.of("deviceId", payload.getDeviceId()))
             .setIssuedAt(payload.getIssuedAt())
             .setExpiration(new Date(System.currentTimeMillis() + refreshTokenExpiration))
-            .signWith(SignatureAlgorithm.HS256, secretKey)
+            .signWith(SignatureAlgorithm.HS256, secretKey.getBytes())
             .compact();
     }
 
