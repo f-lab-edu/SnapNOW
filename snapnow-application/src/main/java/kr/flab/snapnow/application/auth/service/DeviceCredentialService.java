@@ -1,5 +1,7 @@
 package kr.flab.snapnow.application.auth.service;
 
+import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -20,6 +22,10 @@ public class DeviceCredentialService {
 
     public DeviceCredential get(Long userId, String deviceId) {
         return deviceCredentialOutputPort.get(userId, deviceId);
+    }
+
+    public List<DeviceCredential> getAll(Long userId) {
+        return deviceCredentialOutputPort.getAll(userId);
     }
 
     public boolean isLogin(Long userId, String deviceId) {

@@ -1,5 +1,7 @@
 package kr.flab.snapnow.application.user.service;
 
+import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -41,14 +43,15 @@ public class UserService implements SignUpUseCase, DeleteIdUseCase {
             throw new ForbiddenException("Email verification is needed before signing up");
         }
 
+        userOutputPort.insert(user);
+        UserCredential userCredential = credentialService.get(email);
+
         Device device = user.getUserDevice().getDevices().get(0);
         DeviceCredential deviceCredential = DeviceCredential.builder()
-                .userId(user.getUserId())
+                .userId(userCredential.getUserId())
                 .deviceId(device.getDeviceId())
                 .build();
         deviceCredentialService.insert(deviceCredential);
-
-        userOutputPort.insert(user);
 
         return authService.signIn(
                 email,
