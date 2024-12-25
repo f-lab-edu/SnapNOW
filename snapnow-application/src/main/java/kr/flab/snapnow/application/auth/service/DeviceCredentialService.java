@@ -1,6 +1,7 @@
 package kr.flab.snapnow.application.auth.service;
 
 import java.util.List;
+import java.time.LocalDateTime;
 
 import lombok.RequiredArgsConstructor;
 
@@ -34,10 +35,10 @@ public class DeviceCredentialService {
         return deviceCredential.getLoginStatus() == LoginStatus.LOGIN;
     }
 
-    public void login(Long userId, String deviceId, String refreshToken) {
+    public void login(Long userId, String deviceId, String refreshToken, LocalDateTime expriedAt) {
         DeviceCredential deviceCredential = get(userId, deviceId);
 
-        deviceCredential.login(refreshToken);
+        deviceCredential.login(refreshToken, expriedAt);
         deviceCredentialOutputPort.update(deviceCredential);
     }
 
@@ -48,10 +49,11 @@ public class DeviceCredentialService {
         deviceCredentialOutputPort.update(deviceCredential);
     }
 
-    public void reissue(Long userId, String deviceId, String refreshToken) {
+    public void reissue(
+        Long userId, String deviceId, String refreshToken, LocalDateTime expriedAt) {
         DeviceCredential deviceCredential = get(userId, deviceId);
 
-        deviceCredential.reissue(refreshToken);
+        deviceCredential.reissue(refreshToken, expriedAt);
         deviceCredentialOutputPort.update(deviceCredential);
     }
 

@@ -5,6 +5,8 @@ import static org.mockito.Mockito.verify;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.lang.reflect.Field;
 
 import org.mockito.Mock;
@@ -69,9 +71,14 @@ public class AuthServiceT {
 
         // when
         Token token = authService.signIn(email, password, deviceId);
+        TokenPayload tokenPayload = jwtProvider.getPayload(token.getAccessToken());
+        LocalDateTime expiredAt = tokenPayload.getExpiredAt().toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
 
         // then
-        verify(deviceCredentialService).login(userId, deviceId, token.getRefreshToken());
+        verify(deviceCredentialService).login(
+            userId, deviceId, token.getRefreshToken(), expiredAt);
         assertEquals(jwtProvider.getPayload(token.getAccessToken()).getUserId(), userId);
         assertEquals(jwtProvider.getPayload(token.getAccessToken()).getDeviceId(), deviceId);
         assertEquals(jwtProvider.getPayload(token.getRefreshToken()).getUserId(), userId);
@@ -92,9 +99,13 @@ public class AuthServiceT {
 
         //when
         Token newToken = authService.reissue(token);
+        TokenPayload newTokenPayload = jwtProvider.getPayload(newToken.getAccessToken());
+        LocalDateTime newExpiredAt = newTokenPayload.getExpiredAt().toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
 
         //then
-        verify(deviceCredentialService).reissue(userId, deviceId, token.getRefreshToken());
+        verify(deviceCredentialService).reissue(userId, deviceId, token.getRefreshToken(), newExpiredAt);
         assertEquals(jwtProvider.getPayload(newToken.getAccessToken()).getUserId(), tokenPayload.getUserId());
         assertEquals(jwtProvider.getPayload(newToken.getAccessToken()).getDeviceId(), tokenPayload.getDeviceId());
         assertEquals(jwtProvider.getPayload(newToken.getRefreshToken()).getUserId(), tokenPayload.getUserId());

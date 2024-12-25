@@ -74,7 +74,7 @@ public class DeviceCredentialServiceT {
         String refreshToken = "newRefreshToken";
 
         // when
-        deviceCredentialService.login(userId, deviceId, refreshToken);
+        deviceCredentialService.login(userId, deviceId, refreshToken, LocalDateTime.now());
 
         // then
         verify(deviceCredentialOutputPort).update(deviceCredential);
@@ -99,7 +99,7 @@ public class DeviceCredentialServiceT {
         String refreshToken = "newRefreshToken";
 
         // when
-        deviceCredentialService.reissue(userId, deviceId, refreshToken);
+        deviceCredentialService.reissue(userId, deviceId, refreshToken, LocalDateTime.now());
 
         // then
         verify(deviceCredentialOutputPort).update(deviceCredential);
@@ -114,7 +114,7 @@ public class DeviceCredentialServiceT {
 
         // when & then
         assertThrows(LogoutDeviceException.class,
-                () -> deviceCredentialService.reissue(userId, deviceId, "newRefreshToken"));
+                () -> deviceCredentialService.reissue(userId, deviceId, "newRefreshToken", LocalDateTime.now()));
     }
 
     @Test

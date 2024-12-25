@@ -1,5 +1,7 @@
 package kr.flab.snapnow.application.auth.service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 
 import lombok.RequiredArgsConstructor;
@@ -34,9 +36,13 @@ public class AuthService implements AuthUseCase {
         EmailCredential userCredential = (EmailCredential) credentialService.get(email);
 
         Token token = issue(userCredential.getUserId(), deviceId);
+        TokenPayload payload = jwtProvider.getPayload(token.getRefreshToken());
+        LocalDateTime expiredAt = payload.getExpiredAt().toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
 
         deviceCredentialService.login(
-            userCredential.getUserId(), deviceId, token.getRefreshToken());
+            userCredential.getUserId(), deviceId, token.getRefreshToken(), expiredAt);
 
         return token;
     }
@@ -51,8 +57,12 @@ public class AuthService implements AuthUseCase {
         }
 
         Token newToken = issue(payload.getUserId(), payload.getDeviceId());
-        deviceCredentialService.reissue(
-            payload.getUserId(), payload.getDeviceId(), newToken.getRefreshToken());
+        TokenPayload newPayload = jwtProvider.getPayload(newToken.getRefreshToken());
+        LocalDateTime newExpiredAt = newPayload.getExpiredAt().toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
+        deviceCredentialService.reissue(payload.getUserId(), payload.getDeviceId(),
+                newToken.getRefreshToken(), newExpiredAt);
 
         return newToken;
     }
@@ -68,6 +78,7 @@ public class AuthService implements AuthUseCase {
             .issuedAt(new Date())
             .build();
 
+        System.out.println("AuthService.issue() payload.getExpiredAt(): " + payload.getExpiredAt());
         return jwtProvider.createToken(payload);
     }
 }
