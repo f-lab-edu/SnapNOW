@@ -18,12 +18,12 @@ public class DeviceCredential {
     private Long userId;
     private String deviceId;
     private String refreshToken;
-    private LocalDateTime expriedAt;
+    private LocalDateTime expiredAt;
     private LoginStatus loginStatus;
     private LocalDateTime logTime;
 
     private DeviceCredential(Long id, Long userId, String deviceId,
-            String refreshToken, LocalDateTime expriedAt, LoginStatus loginStatus, LocalDateTime logTime) {
+            String refreshToken, LocalDateTime expiredAt, LoginStatus loginStatus, LocalDateTime logTime) {
         if (userId == null) {
             throw new IllegalArgumentException("Device Credentail requires User ID");
         }
@@ -39,35 +39,35 @@ public class DeviceCredential {
         this.userId = userId;
         this.deviceId = deviceId;
         this.refreshToken = refreshToken;
-        this.expriedAt = expriedAt;
+        this.expiredAt = expiredAt;
         this.loginStatus = loginStatus;
         this.logTime = logTime;
     }
 
-    public void login(String refreshToken, LocalDateTime expriedAt) {
+    public void login(String refreshToken, LocalDateTime expiredAt) {
         this.refreshToken = refreshToken;
-        this.expriedAt = expriedAt;
+        this.expiredAt = expiredAt;
         this.loginStatus = LoginStatus.LOGIN;
         this.logTime = LocalDateTime.now();
     }
 
     public void logout() {
         this.refreshToken = null;
-        this.expriedAt = null;
+        this.expiredAt = null;
         this.loginStatus = LoginStatus.LOGOUT;
         this.logTime = LocalDateTime.now();
     }
 
-    public void reissue(String refreshToken, LocalDateTime expriedAt) {
+    public void reissue(String refreshToken, LocalDateTime expiredAt) {
         if (this.loginStatus == LoginStatus.LOGOUT) {
             throw new LogoutDeviceException();
         }
-        if (this.expriedAt.isBefore(LocalDateTime.now())) {
+        if (this.expiredAt.isBefore(LocalDateTime.now())) {
             throw new ExpiredTokenException();
         }
 
         this.refreshToken = refreshToken;
-        this.expriedAt = expriedAt;
+        this.expiredAt = expiredAt;
     }
 
     @Override
@@ -80,14 +80,14 @@ public class DeviceCredential {
         return Objects.equals(userId, that.userId)
                 && Objects.equals(deviceId, that.deviceId)
                 && Objects.equals(refreshToken, that.refreshToken)
-                && Objects.equals(expriedAt, that.expriedAt)
+                && Objects.equals(expiredAt, that.expiredAt)
                 && Objects.equals(loginStatus, that.loginStatus)
                 && Objects.equals(logTime, that.logTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, deviceId, refreshToken, expriedAt, loginStatus, logTime);
+        return Objects.hash(userId, deviceId, refreshToken, expiredAt, loginStatus, logTime);
     }
 }
 

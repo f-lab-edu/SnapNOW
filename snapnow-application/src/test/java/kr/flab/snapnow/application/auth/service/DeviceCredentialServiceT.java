@@ -43,6 +43,7 @@ public class DeviceCredentialServiceT {
             .deviceId(deviceId)
             .loginStatus(LoginStatus.LOGIN)
             .refreshToken("refreshToken")
+            .expiredAt(LocalDateTime.now().plusDays(1))
             .logTime(LocalDateTime.now())
             .build();
 

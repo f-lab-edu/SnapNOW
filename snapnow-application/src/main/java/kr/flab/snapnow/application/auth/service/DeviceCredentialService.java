@@ -35,10 +35,10 @@ public class DeviceCredentialService {
         return deviceCredential.getLoginStatus() == LoginStatus.LOGIN;
     }
 
-    public void login(Long userId, String deviceId, String refreshToken, LocalDateTime expriedAt) {
+    public void login(Long userId, String deviceId, String refreshToken, LocalDateTime expiredAt) {
         DeviceCredential deviceCredential = get(userId, deviceId);
 
-        deviceCredential.login(refreshToken, expriedAt);
+        deviceCredential.login(refreshToken, expiredAt);
         deviceCredentialOutputPort.update(deviceCredential);
     }
 
@@ -50,10 +50,10 @@ public class DeviceCredentialService {
     }
 
     public void reissue(
-        Long userId, String deviceId, String refreshToken, LocalDateTime expriedAt) {
+        Long userId, String deviceId, String refreshToken, LocalDateTime expiredAt) {
         DeviceCredential deviceCredential = get(userId, deviceId);
 
-        deviceCredential.reissue(refreshToken, expriedAt);
+        deviceCredential.reissue(refreshToken, expiredAt);
         deviceCredentialOutputPort.update(deviceCredential);
     }
 
