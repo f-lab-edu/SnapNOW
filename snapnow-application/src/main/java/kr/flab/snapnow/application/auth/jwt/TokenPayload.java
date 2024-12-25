@@ -13,8 +13,9 @@ public class TokenPayload {
     private Long userId;
     private String deviceId;
     private Date issuedAt;
+    private Date expiredAt;
 
-    private TokenPayload(Long userId, String deviceId, Date issuedAt) {
+    private TokenPayload(Long userId, String deviceId, Date issuedAt, Date expiredAt) {
         if (userId == null) {
             throw new IllegalArgumentException("Token requires userId");
         }
@@ -27,6 +28,13 @@ public class TokenPayload {
         this.userId = userId;
         this.deviceId = deviceId;
         this.issuedAt = issuedAt;
+        this.expiredAt = expiredAt;
+    }
+
+    public void setExpiredAt(Date expiredAt) {
+        if (this.expiredAt == null) {
+            this.expiredAt = expiredAt;
+        }
     }
 
     @Override
@@ -38,11 +46,11 @@ public class TokenPayload {
 
         TokenPayload that = (TokenPayload) obj;
         return userId.equals(that.userId) && deviceId.equals(that.deviceId)
-                && issuedAt.equals(that.issuedAt);
+                && issuedAt.equals(that.issuedAt) && expiredAt.equals(that.expiredAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, deviceId, issuedAt);
+        return Objects.hash(userId, deviceId, issuedAt, expiredAt);
     }
 }
