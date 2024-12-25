@@ -77,12 +77,17 @@ public class DeviceCredential {
             return false;
 
         DeviceCredential that = (DeviceCredential) obj;
-        return Objects.equals(userId, that.userId) &&
-                Objects.equals(deviceId, that.deviceId) &&
-                Objects.equals(refreshToken, that.refreshToken) &&
-                Objects.equals(expriedAt, that.expriedAt) &&
-                Objects.equals(loginStatus, that.loginStatus) &&
-                Objects.equals(logTime, that.logTime);
+        return Objects.equals(userId, that.userId)
+                && Objects.equals(deviceId, that.deviceId)
+                && Objects.equals(refreshToken, that.refreshToken)
+                && Objects.equals(expriedAt, that.expriedAt)
+                && Objects.equals(loginStatus, that.loginStatus)
+                && Objects.equals(logTime, that.logTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, deviceId, refreshToken, expriedAt, loginStatus, logTime);
     }
 }
 
