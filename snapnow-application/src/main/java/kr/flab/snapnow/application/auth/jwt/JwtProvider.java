@@ -34,21 +34,25 @@ public class JwtProvider {
     }
 
     public String createAccessToken(TokenPayload payload) {
+        payload.setExpiredAt(new Date(System.currentTimeMillis() + accessTokenExpiration));
+
         return Jwts.builder()
             .setSubject(payload.getUserId().toString())
             .addClaims(Map.of("deviceId", payload.getDeviceId()))
             .setIssuedAt(payload.getIssuedAt())
-            .setExpiration(new Date(System.currentTimeMillis() + accessTokenExpiration))
+            .setExpiration(payload.getExpiredAt())
             .signWith(SignatureAlgorithm.HS256, secretKey.getBytes())
             .compact();
     }
 
     public String createRefreshToken(TokenPayload payload) {
+        payload.setExpiredAt(new Date(System.currentTimeMillis() + refreshTokenExpiration));
+
         return Jwts.builder()
             .setSubject(payload.getUserId().toString())
             .addClaims(Map.of("deviceId", payload.getDeviceId()))
             .setIssuedAt(payload.getIssuedAt())
-            .setExpiration(new Date(System.currentTimeMillis() + refreshTokenExpiration))
+            .setExpiration(payload.getExpiredAt())
             .signWith(SignatureAlgorithm.HS256, secretKey.getBytes())
             .compact();
     }
@@ -59,11 +63,12 @@ public class JwtProvider {
             .build()
             .parseClaimsJws(token)
             .getBody();
-
+            
         return TokenPayload.builder()
             .userId(Long.parseLong(claims.getSubject()))
             .deviceId(claims.get("deviceId", String.class))
             .issuedAt(claims.getIssuedAt())
+            .expiredAt(claims.getExpiration())
             .build();
     }
 

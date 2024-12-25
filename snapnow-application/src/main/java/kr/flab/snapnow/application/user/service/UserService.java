@@ -1,12 +1,16 @@
 package kr.flab.snapnow.application.user.service;
 
+import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.flab.snapnow.core.exception.BadRequestException;
 import kr.flab.snapnow.core.exception.ForbiddenException;
 import kr.flab.snapnow.domain.auth.Token;
+import kr.flab.snapnow.domain.auth.DeviceCredential;
 import kr.flab.snapnow.domain.auth.exception.WrongPasswordException;
 import kr.flab.snapnow.domain.user.enums.account.AuthProvider;
 import kr.flab.snapnow.domain.user.model.User;
@@ -17,29 +21,42 @@ import kr.flab.snapnow.application.user.usecase.SignUpUseCase;
 import kr.flab.snapnow.application.user.output.UserOutputPort;
 import kr.flab.snapnow.application.auth.service.AuthService;
 import kr.flab.snapnow.application.auth.service.CredentialService;
+import kr.flab.snapnow.application.auth.service.DeviceCredentialService;
 import kr.flab.snapnow.application.email.VerificationType;
 import kr.flab.snapnow.application.email.service.EmailService;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class UserService implements SignUpUseCase, DeleteIdUseCase {
 
     private final AuthService authService;
     private final CredentialService credentialService;
+    private final DeviceCredentialService deviceCredentialService;
     private final EmailService emailService;
     private final UserOutputPort userOutputPort;
 
     public Token signUp(User user) {
         Email email = user.getAccount().getCredential().getEmail();
-        Device device = user.getUserDevice().getDevices().get(0);
-
         if (!emailService.isSuccess(
                 email, VerificationType.SIGNUP)) {
             throw new ForbiddenException("Email verification is needed before signing up");
         }
 
         userOutputPort.insert(user);
-        return authService.signIn(email, ((EmailCredential) user.getAccount().getCredential()).getPassword(), device.getDeviceId());
+        UserCredential userCredential = credentialService.get(email);
+
+        Device device = user.getUserDevice().getDevices().get(0);
+        DeviceCredential deviceCredential = DeviceCredential.builder()
+                .userId(userCredential.getUserId())
+                .deviceId(device.getDeviceId())
+                .build();
+        deviceCredentialService.insert(deviceCredential);
+
+        return authService.signIn(
+                email,
+                ((EmailCredential) user.getAccount().getCredential()).getPassword(),
+                device.getDeviceId());
     }
 
     public void deleteEmailUser(Long userId, String password, String deleteReason) {
@@ -70,6 +87,13 @@ public class UserService implements SignUpUseCase, DeleteIdUseCase {
     }
 
     private void delete(Long userId, String deleteReason) {
+        // TODO: UserCredential, UserDevice, UserSetting, UserProfile, UserAccount 모두 삭제
+        // TODO: follow, post 비동기 삭제
+        List<DeviceCredential> deviceCredentials = deviceCredentialService.getAll(userId);
+
+        for (DeviceCredential deviceCredential : deviceCredentials) {
+            deviceCredentialService.delete(userId, deviceCredential.getDeviceId());
+        }
         userOutputPort.delete(userId, deleteReason);
     }
 }

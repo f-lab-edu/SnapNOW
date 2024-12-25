@@ -1,5 +1,7 @@
 package kr.flab.snapnow.application.auth.service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 
 import lombok.RequiredArgsConstructor;
@@ -8,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.flab.snapnow.domain.auth.Token;
-import kr.flab.snapnow.domain.auth.exception.LogoutDeviceException;
 import kr.flab.snapnow.domain.auth.exception.InvalidTokenException;
 import kr.flab.snapnow.domain.auth.exception.WrongPasswordException;
 import kr.flab.snapnow.domain.user.model.userAccount.credential.Email;
@@ -35,14 +36,18 @@ public class AuthService implements AuthUseCase {
         EmailCredential userCredential = (EmailCredential) credentialService.get(email);
 
         Token token = issue(userCredential.getUserId(), deviceId);
+        TokenPayload payload = jwtProvider.getPayload(token.getRefreshToken());
+        LocalDateTime expiredAt = payload.getExpiredAt().toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
 
         deviceCredentialService.login(
-            userCredential.getUserId(), deviceId, token.getRefreshToken());
+            userCredential.getUserId(), deviceId, token.getRefreshToken(), expiredAt);
 
         return token;
     }
 
-    public Token reissue(Token token, String deviceId) {
+    public Token reissue(Token token) {
         TokenPayload payload = jwtProvider.getPayload(token.getAccessToken());
         TokenPayload refreshTokenPayload = jwtProvider.getPayload(token.getRefreshToken());
 
@@ -50,12 +55,14 @@ public class AuthService implements AuthUseCase {
             || !payload.getDeviceId().equals(refreshTokenPayload.getDeviceId())) {
             throw new InvalidTokenException("Access token and refresh token are not matched");
         }
-        if (!deviceCredentialService.isLogin(payload.getUserId(), deviceId)) {
-            throw new LogoutDeviceException();
-        }
 
-        Token newToken = issue(payload.getUserId(), deviceId);
-        deviceCredentialService.updateRefreshToken(payload.getUserId(), deviceId, newToken.getRefreshToken());
+        Token newToken = issue(payload.getUserId(), payload.getDeviceId());
+        TokenPayload newPayload = jwtProvider.getPayload(newToken.getRefreshToken());
+        LocalDateTime newExpiredAt = newPayload.getExpiredAt().toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
+        deviceCredentialService.reissue(payload.getUserId(), payload.getDeviceId(),
+                newToken.getRefreshToken(), newExpiredAt);
 
         return newToken;
     }
@@ -71,6 +78,7 @@ public class AuthService implements AuthUseCase {
             .issuedAt(new Date())
             .build();
 
+        System.out.println("AuthService.issue() payload.getExpiredAt(): " + payload.getExpiredAt());
         return jwtProvider.createToken(payload);
     }
 }

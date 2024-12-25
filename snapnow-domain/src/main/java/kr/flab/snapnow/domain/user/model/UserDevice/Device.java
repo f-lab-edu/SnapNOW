@@ -26,6 +26,12 @@ public class Device {
             throw new IllegalArgumentException("Device type is required");
         }
         // TODO: 디바이스 토큰 필수. 현재 구현이 안되어있어 생략...
+
+        this.deviceId = deviceId;
+        this.deviceType = deviceType;
+        this.deviceModel = deviceModel;
+        this.deviceOs = deviceOs;
+        this.deviceOsVersion = deviceOsVersion;
     }
 
     public void updateDeviceToken(String deviceToken) {
