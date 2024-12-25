@@ -22,6 +22,7 @@ import kr.flab.snapnow.application.user.output.UserOutputPort;
 import kr.flab.snapnow.application.auth.service.AuthService;
 import kr.flab.snapnow.application.auth.service.CredentialService;
 import kr.flab.snapnow.application.auth.service.DeviceCredentialService;
+import kr.flab.snapnow.application.auth.service.PasswordService;
 import kr.flab.snapnow.application.email.VerificationType;
 import kr.flab.snapnow.application.email.service.EmailService;
 
@@ -30,6 +31,7 @@ import kr.flab.snapnow.application.email.service.EmailService;
 @RequiredArgsConstructor
 public class UserService implements SignUpUseCase, DeleteIdUseCase {
 
+    private final PasswordService passwordService;
     private final AuthService authService;
     private final CredentialService credentialService;
     private final DeviceCredentialService deviceCredentialService;
@@ -43,9 +45,13 @@ public class UserService implements SignUpUseCase, DeleteIdUseCase {
             throw new ForbiddenException("Email verification is needed before signing up");
         }
 
-        userOutputPort.insert(user);
-        UserCredential userCredential = credentialService.get(email);
+        String encodedPassword = passwordService.validateAndEncodePassword(
+                ((EmailCredential) user.getAccount().getCredential()).getPassword());
+        ((EmailCredential) user.getAccount().getCredential()).updatePassword(encodedPassword);
 
+        userOutputPort.insert(user);
+
+        UserCredential userCredential = credentialService.get(email);
         Device device = user.getUserDevice().getDevices().get(0);
         DeviceCredential deviceCredential = DeviceCredential.builder()
                 .userId(userCredential.getUserId())
@@ -55,7 +61,7 @@ public class UserService implements SignUpUseCase, DeleteIdUseCase {
 
         return authService.signIn(
                 email,
-                ((EmailCredential) user.getAccount().getCredential()).getPassword(),
+                encodedPassword,
                 device.getDeviceId());
     }
 

@@ -9,5 +9,5 @@ public interface CredentialOutputPort {
 
     public UserCredential get(Email email);
 
-    public void updatePassword(Long userId, String password);
+    public void update(UserCredential credential);
 }

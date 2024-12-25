@@ -27,6 +27,8 @@ import kr.flab.snapnow.application.email.service.EmailService;
 public class UserSerivceT {
 
     @Mock
+    private PasswordService passwordService;
+    @Mock
     private AuthService authService;
     @Mock
     private CredentialService credentialService;
@@ -59,20 +61,24 @@ public class UserSerivceT {
                 .email(user.getAccount().getCredential().getEmail())
                 .password(((EmailCredential) user.getAccount().getCredential()).getPassword())
                 .build();
+        Token token = new Token("accessToken", "refreshToken");
 
+        when(emailService.isSuccess(
+                user.getAccount().getCredential().getEmail(),
+                VerificationType.SIGNUP)).thenReturn(true);
+        when(passwordService.validateAndEncodePassword(
+                ((EmailCredential) user.getAccount().getCredential()).getPassword()))
+            .thenReturn("encodedPassword");
         when(credentialService.get(email))
             .thenReturn(userCredential);
-        when(emailService.isSuccess(
-            user.getAccount().getCredential().getEmail(),
-            VerificationType.SIGNUP)).thenReturn(true);
         when(authService.signIn(
                 user.getAccount().getCredential().getEmail(),
-                ((EmailCredential) user.getAccount().getCredential()).getPassword(),
+                "encodedPassword",
                 user.getUserDevice().getDevices().get(0).getDeviceId()))
-            .thenReturn(new Token("accessToken", "refreshToken"));
+            .thenReturn(token);
 
         // when & then
-        assertEquals(userService.signUp(user), new Token("accessToken", "refreshToken"));
+        assertEquals(token, userService.signUp(user));
         verify(deviceCredentialService).insert(deviceCredential);
         verify(userOutputPort).insert(user);
     }
