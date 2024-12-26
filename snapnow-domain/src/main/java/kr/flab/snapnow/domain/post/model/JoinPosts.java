@@ -25,8 +25,7 @@ public class JoinPosts {
         if (expiredAt.isBefore(LocalDateTime.now())) {
             throw new BadRequestException(PostExceptionType.JOIN_POST_EXPIRED.getMessage());
         }
-        if (joinPosts.stream().anyMatch(
-            post -> post.getUserId().equals(joinPost.getUserId()))) {
+        if (joinPosts.stream().anyMatch(post -> post.getUserId().equals(joinPost.getUserId()))) {
             throw new BadRequestException(PostExceptionType.JOIN_POST_ALREADY_JOINED.getMessage());
         }
         this.joinPosts.add(joinPost);

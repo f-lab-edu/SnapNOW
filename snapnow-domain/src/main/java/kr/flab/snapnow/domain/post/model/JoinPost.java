@@ -2,8 +2,10 @@ package kr.flab.snapnow.domain.post.model;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import kr.flab.snapnow.domain.post.enums.CarouselImageType;
+
 import lombok.Builder;
+
+import kr.flab.snapnow.domain.post.enums.CarouselImageType;
 
 @Builder
 public class JoinPost extends BasePost {
@@ -35,10 +37,5 @@ public class JoinPost extends BasePost {
             throw new IllegalArgumentException("Join post must have snap");
         }
         this.expiredAt = LocalDateTime.now().plusHours(4);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
     }
 }
