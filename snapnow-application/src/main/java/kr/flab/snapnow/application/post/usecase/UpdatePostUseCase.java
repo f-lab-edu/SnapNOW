@@ -5,5 +5,5 @@ import kr.flab.snapnow.domain.post.viewModel.BasePostView;
 
 public interface UpdatePostUseCase {
 
-    BasePostView updatePost(BasePost post);
+    BasePostView update(BasePost post);
 }

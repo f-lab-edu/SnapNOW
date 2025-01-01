@@ -1,8 +1,9 @@
 package kr.flab.snapnow.application.post.usecase;
 
-import kr.flab.snapnow.domain.post.model.JoinPost;
+import kr.flab.snapnow.domain.post.model.DefaultPost;
+import kr.flab.snapnow.domain.post.viewModel.JoinPostView;
 
 public interface JoinUseCase {
 
-    Long join(Long joinId, JoinPost joinPost);
+    JoinPostView join(Long joinId, DefaultPost post);
 }
