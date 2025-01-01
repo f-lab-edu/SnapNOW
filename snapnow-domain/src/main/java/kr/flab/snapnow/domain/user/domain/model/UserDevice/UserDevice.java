@@ -5,6 +5,9 @@ import java.util.List;
 import lombok.Getter;
 import lombok.Builder;
 
+import kr.flab.snapnow.domain.user.domain.constants.UserDeviceConstants;
+import kr.flab.snapnow.domain.user.domain.enums.UserExceptionType;
+
 @Getter
 @Builder
 public class UserDevice {
@@ -20,8 +23,9 @@ public class UserDevice {
         if (devices == null) {
             throw new IllegalArgumentException("Devices are required");
         }
-        if (devices.size() > 5) {
-            throw new IllegalArgumentException("Device count exceeded (Max 5)");
+        if (devices.size() > UserDeviceConstants.MAX_DEVICES) {
+            throw new IllegalArgumentException(
+                UserExceptionType.DEVICE_COUNT_EXCEEDED.getMessage());
         }
     }
 }
