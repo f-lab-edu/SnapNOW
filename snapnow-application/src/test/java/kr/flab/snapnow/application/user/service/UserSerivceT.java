@@ -1,10 +1,10 @@
 package kr.flab.snapnow.application.user.service;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.InjectMocks;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
@@ -21,6 +21,7 @@ import kr.flab.snapnow.application.user.output.UserOutputPort;
 import kr.flab.snapnow.application.email.VerificationType;
 import kr.flab.snapnow.application.email.service.EmailService;
 
+@ExtendWith(MockitoExtension.class)
 public class UserSerivceT {
 
     @Mock
@@ -33,11 +34,6 @@ public class UserSerivceT {
     private UserOutputPort userOutputPort;
     @InjectMocks
     private UserService userService;
-
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
     public void signUp() {
