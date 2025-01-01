@@ -13,7 +13,7 @@ import lombok.AllArgsConstructor;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class UserAccountInfo {
+public class UserInfo {
 
     private String name;
     private LocalDate birthDay;
