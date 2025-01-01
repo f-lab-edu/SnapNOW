@@ -22,7 +22,7 @@ import kr.flab.snapnow.application.email.VerificationType;
 import kr.flab.snapnow.application.email.service.EmailService;
 
 @ExtendWith(MockitoExtension.class)
-public class UserSerivceT {
+public class UserSerivceTest {
 
     @Mock
     private AuthService authService;
