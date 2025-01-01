@@ -41,7 +41,8 @@ public class Follow {
 
     public void updateFollowNotification(FollowNotification followNotification) {
         if (followStatus != FollowStatus.FOLLOWING) {
-            return;
+            throw new IllegalArgumentException(
+                "Cannot update follow notification for non-following user");
         }
         if (followNotification == null) {
             followNotification = FollowNotification.getDefault();
