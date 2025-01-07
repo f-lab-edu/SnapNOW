@@ -22,7 +22,7 @@ import kr.flab.snapnow.domain.auth.Token;
 import kr.flab.snapnow.domain.user.model.userAccount.credential.Email;
 import kr.flab.snapnow.domain.user.model.userAccount.credential.EmailCredential;
 
-public class AuthServiceT {
+public class AuthServiceTest {
 
     private JwtProvider jwtProvider;
 
