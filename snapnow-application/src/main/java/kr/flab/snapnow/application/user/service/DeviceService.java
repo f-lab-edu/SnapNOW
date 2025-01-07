@@ -12,8 +12,8 @@ public class DeviceService {
 
     private final DeviceOutputPort deviceOutputPort;
 
-    public String insert(Device device) {
-        return deviceOutputPort.insert(device);
+    public void insert(Device device) {
+        deviceOutputPort.insert(device);
     }
 
     public void delete(String deviceId) {

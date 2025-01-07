@@ -5,6 +5,8 @@ import static org.mockito.Mockito.verify;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.lang.reflect.Field;
 
 import org.mockito.Mock;
@@ -78,9 +80,14 @@ public class AuthServiceTest {
             .password(password)
             .deviceId(deviceId)
             .build());
+        TokenPayload tokenPayload = jwtProvider.getPayload(token.getAccessToken());
+        LocalDateTime expiredAt = tokenPayload.getExpiredAt().toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
 
         // then
-        verify(deviceCredentialService).login(userId, deviceId, token.getRefreshToken());
+        verify(deviceCredentialService).login(
+            userId, deviceId, token.getRefreshToken(), expiredAt);
         assertEquals(jwtProvider.getPayload(token.getAccessToken()).getUserId(), userId);
         assertEquals(jwtProvider.getPayload(token.getAccessToken()).getDeviceId(), deviceId);
         assertEquals(jwtProvider.getPayload(token.getRefreshToken()).getUserId(), userId);
@@ -98,7 +105,6 @@ public class AuthServiceTest {
             .issuedAt(new Date())
             .build();
         Token token = jwtProvider.createToken(tokenPayload);
-        when(deviceCredentialService.isLogin(userId, deviceId)).thenReturn(true);
 
         //when
         Token newToken = authService.reissue(ReissueRequest.builder()
@@ -106,9 +112,13 @@ public class AuthServiceTest {
             .refreshToken(token.getRefreshToken())
             .deviceId(deviceId)
             .build());
+        TokenPayload newTokenPayload = jwtProvider.getPayload(newToken.getAccessToken());
+        LocalDateTime newExpiredAt = newTokenPayload.getExpiredAt().toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
 
         //then
-        verify(deviceCredentialService).updateRefreshToken(userId, deviceId, token.getRefreshToken());
+        verify(deviceCredentialService).reissue(userId, deviceId, token.getRefreshToken(), newExpiredAt);
         assertEquals(jwtProvider.getPayload(newToken.getAccessToken()).getUserId(), tokenPayload.getUserId());
         assertEquals(jwtProvider.getPayload(newToken.getAccessToken()).getDeviceId(), tokenPayload.getDeviceId());
         assertEquals(jwtProvider.getPayload(newToken.getRefreshToken()).getUserId(), tokenPayload.getUserId());

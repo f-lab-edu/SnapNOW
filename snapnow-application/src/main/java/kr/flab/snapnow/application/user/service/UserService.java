@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import kr.flab.snapnow.core.exception.BadRequestException;
 import kr.flab.snapnow.core.exception.ForbiddenException;
 import kr.flab.snapnow.domain.auth.Token;
@@ -25,6 +26,7 @@ import kr.flab.snapnow.application.email.VerificationType;
 import kr.flab.snapnow.application.email.service.EmailService;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class UserService implements SignUpUseCase, DeleteIdUseCase {
 
