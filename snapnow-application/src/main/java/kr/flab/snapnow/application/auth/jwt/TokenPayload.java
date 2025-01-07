@@ -1,7 +1,6 @@
 package kr.flab.snapnow.application.auth.jwt;
 
 import java.util.Date;
-import java.util.Objects;
 
 import lombok.Builder;
 import lombok.Getter;
