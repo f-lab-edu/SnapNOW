@@ -20,7 +20,6 @@ import kr.flab.snapnow.application.user.output.UserOutputPort;
 import kr.flab.snapnow.application.user.usecase.dto.UserCreateDto;
 import kr.flab.snapnow.application.email.VerificationType;
 import kr.flab.snapnow.application.email.service.EmailService;
-import kr.flab.snapnow.application.auth.usecase.dto.IssueRequest;
 
 @ExtendWith(MockitoExtension.class)
 public class UserSerivceTest {
@@ -53,11 +52,7 @@ public class UserSerivceTest {
             user.getCredential().getEmail(),
                 VerificationType.SIGNUP)).thenReturn(true);
         when(userOutputPort.insert()).thenReturn(userId);
-        when(authService.issue(
-            IssueRequest.builder()
-                .userId(userId)
-                .deviceId(user.getDevice().getDeviceId())
-                .build()))
+        when(authService.signIn(userId, user.getDevice().getDeviceId()))
             .thenReturn(new Token("accessToken" + userId, "refreshToken" + userId));
 
         // when & then
@@ -87,7 +82,7 @@ public class UserSerivceTest {
         String password = "password";
         EmailCredential credential = UserFixture.createEmailCredential();
 
-        when(credentialService.getCredential(userId)).thenReturn(credential);
+        when(credentialService.get(userId)).thenReturn(credential);
         when(credentialService.isPasswordMatch(userId, password)).thenReturn(true);
 
         // when & then
@@ -107,7 +102,7 @@ public class UserSerivceTest {
         String deleteReason = "test";
         OAuthCredential credential = UserFixture.createOAuthCredential();
 
-        when(credentialService.getCredential(userId)).thenReturn(credential);
+        when(credentialService.get(userId)).thenReturn(credential);
         when(emailService.isSuccess(credential.getEmail(), VerificationType.DELETE_ID))
             .thenReturn(true);
 

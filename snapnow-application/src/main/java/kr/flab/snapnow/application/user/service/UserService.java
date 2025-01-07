@@ -7,10 +7,12 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.flab.snapnow.core.exception.BadRequestException;
 import kr.flab.snapnow.core.exception.ForbiddenException;
 import kr.flab.snapnow.domain.auth.Token;
-import kr.flab.snapnow.domain.auth.exception.UserNotMatchPasswordException;
+import kr.flab.snapnow.domain.auth.exception.WrongPasswordException;
 import kr.flab.snapnow.domain.user.enums.account.AuthProvider;
 import kr.flab.snapnow.domain.user.model.userAccount.credential.Email;
 import kr.flab.snapnow.domain.user.model.userAccount.credential.UserCredential;
+import kr.flab.snapnow.domain.user.model.userAccount.credential.EmailCredential;
+import kr.flab.snapnow.domain.user.model.userAccount.credential.OAuthCredential;
 import kr.flab.snapnow.domain.user.model.userProfile.UserProfile;
 import kr.flab.snapnow.domain.user.model.userDevice.Device;
 import kr.flab.snapnow.application.user.usecase.dto.UserCreateDto;
@@ -21,7 +23,6 @@ import kr.flab.snapnow.application.auth.service.AuthService;
 import kr.flab.snapnow.application.auth.service.CredentialService;
 import kr.flab.snapnow.application.email.VerificationType;
 import kr.flab.snapnow.application.email.service.EmailService;
-import kr.flab.snapnow.application.auth.usecase.dto.IssueRequest;
 
 @Service
 @RequiredArgsConstructor
@@ -45,27 +46,24 @@ public class UserService implements SignUpUseCase, DeleteIdUseCase {
         }
 
         Long userId = createUser(userCreateDto);
-        return authService.issue(IssueRequest.builder()
-            .userId(userId)
-            .deviceId(userCreateDto.getDevice().getDeviceId())
-            .build());
+        return authService.signIn(userId, userCreateDto.getDevice().getDeviceId());
     }
 
     public void deleteEmailUser(Long userId, String password, String deleteReason) {
-        UserCredential credential = credentialService.getCredential(userId);
+        EmailCredential credential = (EmailCredential) credentialService.get(userId);
 
         if (credential.getAuthProvider() != AuthProvider.EMAIL) {
             throw new BadRequestException("This request is not allowed for OAuth users");
         }
         if (!credentialService.isPasswordMatch(userId, password)) {
-            throw new UserNotMatchPasswordException();
+            throw new WrongPasswordException();
         }
 
         delete(userId, deleteReason);
     }
 
     public void deleteOAuthUser(Long userId, String deleteReason) {
-        UserCredential credential = credentialService.getCredential(userId);
+        OAuthCredential credential = (OAuthCredential) credentialService.get(userId);
 
         if (credential.getAuthProvider() == AuthProvider.EMAIL) {
             throw new BadRequestException("This request is not allowed for email users");
