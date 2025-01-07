@@ -14,7 +14,6 @@ import kr.flab.snapnow.domain.auth.exception.ExpiredTokenException;
 @Builder
 public class DeviceCredential {
 
-    private Long id;
     private Long userId;
     private String deviceId;
     private String refreshToken;
@@ -22,7 +21,7 @@ public class DeviceCredential {
     private LoginStatus loginStatus;
     private LocalDateTime logTime;
 
-    private DeviceCredential(Long id, Long userId, String deviceId,
+    private DeviceCredential(Long userId, String deviceId,
             String refreshToken, LocalDateTime expiredAt, LoginStatus loginStatus, LocalDateTime logTime) {
         if (userId == null) {
             throw new IllegalArgumentException("Device Credentail requires User ID");
@@ -79,15 +78,12 @@ public class DeviceCredential {
         DeviceCredential that = (DeviceCredential) obj;
         return Objects.equals(userId, that.userId)
                 && Objects.equals(deviceId, that.deviceId)
-                && Objects.equals(refreshToken, that.refreshToken)
-                && Objects.equals(expiredAt, that.expiredAt)
-                && Objects.equals(loginStatus, that.loginStatus)
-                && Objects.equals(logTime, that.logTime);
+                && Objects.equals(refreshToken, that.refreshToken);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, deviceId, refreshToken, expiredAt, loginStatus, logTime);
+        return Objects.hash(userId, deviceId, refreshToken);
     }
 }
 
