@@ -11,7 +11,7 @@ import kr.flab.snapnow.domain.user.model.userAccount.*;
 import kr.flab.snapnow.domain.user.model.userProfile.*;
 import kr.flab.snapnow.domain.user.model.userSetting.*;
 import kr.flab.snapnow.domain.user.model.userDevice.*;
-import kr.flab.snapnow.domain.user.model.User;
+import kr.flab.snapnow.application.user.usecase.dto.UserCreateDto;
 
 public class UserFixture {
 
@@ -30,18 +30,11 @@ public class UserFixture {
                 .build();
     }
     
-    public static UserAccountInfo createUserAccountInfo() {
-        return UserAccountInfo.builder()
+    public static UserInfo createUserInfo() {
+        return UserInfo.builder()
                 .name("test")
                 .birthDay(LocalDate.of(2000, 1, 1))
                 .phoneNumber("010-1234-5678")
-                .build();
-    }
-
-    public static UserAccount createUserAccount() {
-        return UserAccount.builder()
-                .credential(createEmailCredential())
-                .info(createUserAccountInfo())
                 .build();
     }
 
@@ -77,12 +70,11 @@ public class UserFixture {
                 .build();
     }
 
-    public static User createUser() {
-        return User.builder()
-                .account(createUserAccount())
+    public static UserCreateDto createUserCreateDto() {
+        return UserCreateDto.builder()
+                .credential(createEmailCredential())
                 .profile(createUserProfile())
-                .settings(createUserSettings())
-                .userDevice(createUserDevice())
+                .device(createDevice())
                 .build();
     }
 }
