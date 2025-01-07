@@ -94,7 +94,13 @@ public class UserService implements SignUpUseCase, DeleteIdUseCase {
         return userId;
     }
 
+    @Transactional
     private void delete(Long userId, String deleteReason) {
+        credentialService.delete(userId);
+        userProfileService.delete(userId);
+        userDeviceService.deleteAll(userId);
+        userInfoService.delete(userId);
+        userSettingService.delete(userId);
         userOutputPort.delete(userId, deleteReason);
     }
 }
