@@ -15,6 +15,9 @@ import org.junit.jupiter.api.BeforeEach;
 
 import kr.flab.snapnow.application.auth.jwt.JwtProvider;
 import kr.flab.snapnow.application.auth.jwt.TokenPayload;
+import kr.flab.snapnow.application.auth.usecase.dto.EmailSignInRequest;
+import kr.flab.snapnow.application.auth.usecase.dto.ReissueRequest;
+import kr.flab.snapnow.application.auth.usecase.dto.SignOutRequest;
 import kr.flab.snapnow.domain.auth.Token;
 import kr.flab.snapnow.domain.user.model.userAccount.credential.Email;
 import kr.flab.snapnow.domain.user.model.userAccount.credential.EmailCredential;
@@ -27,6 +30,9 @@ public class AuthServiceT {
     private CredentialService credentialService;
 
     @Mock
+    private PasswordService passwordService;
+
+    @Mock
     private DeviceCredentialService deviceCredentialService;
 
     @InjectMocks
@@ -36,7 +42,7 @@ public class AuthServiceT {
     public void setUp() throws NoSuchFieldException, IllegalAccessException {
         MockitoAnnotations.openMocks(this);
         jwtProvider = new JwtProvider();
-        authService = new AuthService(jwtProvider, credentialService, deviceCredentialService);
+        authService = new AuthService(jwtProvider, credentialService, passwordService, deviceCredentialService);
 
         Field secretKeyfield = JwtProvider.class.getDeclaredField("secretKey");
         secretKeyfield.setAccessible(true);
@@ -64,11 +70,14 @@ public class AuthServiceT {
             .build();
 
         when(credentialService.get(email)).thenReturn(credential);
-        when(credentialService.isPasswordMatch(email, password))
-            .thenReturn(true);
+        when(passwordService.isPasswordMatch(password, password)).thenReturn(true);
 
         // when
-        Token token = authService.signIn(email, password, deviceId);
+        Token token = authService.signIn(EmailSignInRequest.builder()
+            .email(email.getValue())
+            .password(password)
+            .deviceId(deviceId)
+            .build());
 
         // then
         verify(deviceCredentialService).login(userId, deviceId, token.getRefreshToken());
@@ -92,7 +101,11 @@ public class AuthServiceT {
         when(deviceCredentialService.isLogin(userId, deviceId)).thenReturn(true);
 
         //when
-        Token newToken = authService.reissue(token, deviceId);
+        Token newToken = authService.reissue(ReissueRequest.builder()
+            .accessToken(token.getAccessToken())
+            .refreshToken(token.getRefreshToken())
+            .deviceId(deviceId)
+            .build());
 
         //then
         verify(deviceCredentialService).updateRefreshToken(userId, deviceId, token.getRefreshToken());
@@ -109,7 +122,10 @@ public class AuthServiceT {
         String deviceId = "deviceId";
 
         //when
-        authService.signOut(userId, deviceId);
+        authService.signOut(SignOutRequest.builder()
+            .userId(userId)
+            .deviceId(deviceId)
+            .build());
 
         //then
         verify(deviceCredentialService).logout(userId, deviceId);
