@@ -19,7 +19,7 @@ import kr.flab.snapnow.domain.auth.enums.LoginStatus;
 import kr.flab.snapnow.domain.auth.exception.LogoutDeviceException;
 import kr.flab.snapnow.application.auth.output.DeviceCredentialOutputPort;
 
-public class DeviceCredentialServiceT {
+public class DeviceCredentialServiceTest {
     
     private Long userId;
     private String deviceId;
@@ -38,7 +38,6 @@ public class DeviceCredentialServiceT {
         userId = 1L;
         deviceId = "deviceId";
         deviceCredential = DeviceCredential.builder()
-            .id(1L)
             .userId(userId)
             .deviceId(deviceId)
             .loginStatus(LoginStatus.LOGIN)
