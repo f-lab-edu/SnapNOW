@@ -1,7 +1,5 @@
 package kr.flab.snapnow.application.user.service;
 
-import java.util.List;
-
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -10,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.flab.snapnow.core.exception.BadRequestException;
 import kr.flab.snapnow.core.exception.ForbiddenException;
 import kr.flab.snapnow.domain.auth.Token;
-import kr.flab.snapnow.domain.auth.DeviceCredential;
 import kr.flab.snapnow.domain.auth.exception.WrongPasswordException;
 import kr.flab.snapnow.domain.user.enums.account.AuthProvider;
 import kr.flab.snapnow.domain.user.model.userAccount.credential.Email;

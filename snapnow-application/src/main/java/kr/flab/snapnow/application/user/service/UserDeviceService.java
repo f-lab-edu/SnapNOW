@@ -6,9 +6,11 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import kr.flab.snapnow.application.auth.service.DeviceCredentialService;
 import kr.flab.snapnow.application.user.output.UserDeviceOutputPort;
 import kr.flab.snapnow.domain.user.model.userDevice.UserDevice;
 import kr.flab.snapnow.domain.user.model.userDevice.Device;
+import kr.flab.snapnow.domain.auth.DeviceCredential;
 
 @Service
 @Transactional(readOnly = true)
@@ -16,6 +18,7 @@ import kr.flab.snapnow.domain.user.model.userDevice.Device;
 public class UserDeviceService {
 
     private final DeviceService deviceService;
+    private final DeviceCredentialService deviceCredentialService;
     private final UserDeviceOutputPort userDeviceOutputPort;
 
     @Transactional
@@ -24,6 +27,11 @@ public class UserDeviceService {
             deviceService.insert(device);
         }
 
+        DeviceCredential deviceCredential = DeviceCredential.builder()
+            .deviceId(device.getDeviceId())
+            .userId(userId)
+            .build();
+        deviceCredentialService.insert(deviceCredential);
         userDeviceOutputPort.insert(userId, device.getDeviceId());
     }
 
@@ -51,9 +59,7 @@ public class UserDeviceService {
 
         userDeviceOutputPort.deleteAll(userId);
         for (Device device : devices) {
-            if (count(device.getDeviceId()) == 1) {
-                deviceService.delete(device.getDeviceId());
-            }
+            delete(userId, device.getDeviceId());
         }
     }
 }
