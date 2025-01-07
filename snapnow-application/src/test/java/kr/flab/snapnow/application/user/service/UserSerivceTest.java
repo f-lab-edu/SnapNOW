@@ -13,13 +13,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import kr.flab.snapnow.core.exception.ForbiddenException;
 import kr.flab.snapnow.domain.auth.Token;
-import kr.flab.snapnow.domain.user.model.User;
 import kr.flab.snapnow.domain.user.model.userAccount.credential.*;
 import kr.flab.snapnow.application.auth.service.*;
 import kr.flab.snapnow.application.user.fixture.UserFixture;
 import kr.flab.snapnow.application.user.output.UserOutputPort;
+import kr.flab.snapnow.application.user.usecase.dto.UserCreateDto;
 import kr.flab.snapnow.application.email.VerificationType;
 import kr.flab.snapnow.application.email.service.EmailService;
+import kr.flab.snapnow.application.auth.usecase.dto.IssueRequest;
 
 @ExtendWith(MockitoExtension.class)
 public class UserSerivceTest {
@@ -32,31 +33,47 @@ public class UserSerivceTest {
     private EmailService emailService;
     @Mock
     private UserOutputPort userOutputPort;
+    @Mock
+    private UserProfileService userProfileService;
+    @Mock
+    private UserInfoService userInfoService;
+    @Mock
+    private UserSettingService userSettingService;
+    @Mock
+    private UserDeviceService userDeviceService;
     @InjectMocks
     private UserService userService;
 
     @Test
     public void signUp() {
         // given
-        User user = UserFixture.createUser();
+        Long userId = 1L;
+        UserCreateDto user = UserFixture.createUserCreateDto();
         when(emailService.isSuccess(
-            user.getAccount().getCredential().getEmail(),
-            VerificationType.SIGNUP)).thenReturn(true);
+            user.getCredential().getEmail(),
+                VerificationType.SIGNUP)).thenReturn(true);
+        when(userOutputPort.insert()).thenReturn(userId);
         when(authService.issue(
-            user.getAccount().getCredential().getEmail(),
-            user.getUserDevice().getDevices().get(0).getDeviceId()))
-            .thenReturn(new Token("accessToken", "refreshToken"));
+            IssueRequest.builder()
+                .userId(userId)
+                .deviceId(user.getDevice().getDeviceId())
+                .build()))
+            .thenReturn(new Token("accessToken" + userId, "refreshToken" + userId));
 
         // when & then
-        assertEquals(userService.signUp(user), new Token("accessToken", "refreshToken"));
-        verify(userOutputPort).insert(user);
+        assertEquals(userService.signUp(user), new Token("accessToken" + userId, "refreshToken" + userId));
+        verify(credentialService).insert(user.getCredential());
+        verify(userProfileService).insert(user.getProfile());
+        verify(userDeviceService).insert(userId, user.getDevice());
+        verify(userInfoService).insert(userId);
+        verify(userSettingService).insert(userId);
     }
 
     @Test
     public void failSignUpEmailNotVerified() {
         // given
-        User user = UserFixture.createUser();
-        when(emailService.isSuccess(user.getAccount().getCredential().getEmail(),
+        UserCreateDto user = UserFixture.createUserCreateDto();
+        when(emailService.isSuccess(user.getCredential().getEmail(),
                 VerificationType.SIGNUP)).thenReturn(false);
 
         // when & then
