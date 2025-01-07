@@ -1,7 +1,6 @@
 package kr.flab.snapnow.application.auth.jwt;
 
 import java.util.Date;
-import java.util.Objects;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -36,22 +35,5 @@ public class TokenPayload {
             throw new IllegalArgumentException("Token's expiredAt only can be set once");
         }
         this.expiredAt = expiredAt;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null || getClass() != obj.getClass())
-            return false;
-
-        TokenPayload that = (TokenPayload) obj;
-        return userId.equals(that.userId) && deviceId.equals(that.deviceId)
-                && issuedAt.equals(that.issuedAt) && expiredAt.equals(that.expiredAt);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(userId, deviceId, issuedAt, expiredAt);
     }
 }
