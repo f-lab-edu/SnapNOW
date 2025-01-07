@@ -40,6 +40,8 @@ public class UserSerivceTest {
     private UserSettingService userSettingService;
     @Mock
     private UserDeviceService userDeviceService;
+    @Mock
+    private PasswordService passwordService;
     @InjectMocks
     private UserService userService;
 

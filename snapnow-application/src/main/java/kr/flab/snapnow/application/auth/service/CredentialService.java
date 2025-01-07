@@ -53,7 +53,7 @@ public class CredentialService implements GetCredentialUseCase, UpdatePasswordUs
     public void updatePassword(Long userId, String originalPassword, String newPassword) {
         EmailCredential userCredential = (EmailCredential) credentialOutputPort.get(userId);
 
-        passwordService.updatePassword(userCredential, newPassword);
+        passwordService.updatePassword(userCredential, originalPassword, newPassword);
         credentialOutputPort.updatePassword(userId, newPassword);
     }
 

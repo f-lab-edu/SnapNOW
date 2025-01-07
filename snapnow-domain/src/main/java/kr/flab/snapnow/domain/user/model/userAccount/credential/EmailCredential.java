@@ -25,4 +25,8 @@ public class EmailCredential extends UserCredential {
         this.email = email;
         this.password = password;
     }
+
+    public void updatePassword(String newPassword) {
+        this.password = newPassword;
+    }
 }
