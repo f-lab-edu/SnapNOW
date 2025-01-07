@@ -30,10 +30,6 @@ public class JoinPost extends BasePost {
         boolean isHideCount,
         boolean isForbiddenComment) {
         super(id, userId, content, carousel, hashTags, userTags, isHideCount, isForbiddenComment);
-
-        if (joinId == null) {
-            throw new IllegalArgumentException("Join post must have joinId");
-        }
         if (carousel.getCarouselImages().stream()
                 .anyMatch(image -> image.getType() == CarouselImageType.FRONT)) {
             throw new IllegalArgumentException("Join post must have snap");
