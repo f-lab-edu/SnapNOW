@@ -1,10 +1,13 @@
 package kr.flab.snapnow.application.user.service;
 
+import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import kr.flab.snapnow.application.user.output.UserDeviceOutputPort;
+import kr.flab.snapnow.domain.user.model.userDevice.UserDevice;
 import kr.flab.snapnow.domain.user.model.userDevice.Device;
 
 @Service
@@ -38,6 +41,19 @@ public class UserDeviceService {
 
         if (count(deviceId) == 1) {
             deviceService.delete(deviceId);
+        }
+    }
+
+    @Transactional
+    public void deleteAll(Long userId) {
+        UserDevice userDevice = userDeviceOutputPort.get(userId);
+        List<Device> devices = userDevice.getDevices();
+
+        userDeviceOutputPort.deleteAll(userId);
+        for (Device device : devices) {
+            if (count(device.getDeviceId()) == 1) {
+                deviceService.delete(device.getDeviceId());
+            }
         }
     }
 }

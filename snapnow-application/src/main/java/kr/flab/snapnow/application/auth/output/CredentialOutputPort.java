@@ -9,4 +9,6 @@ public interface CredentialOutputPort {
     public UserCredential get(Long userId);
 
     public void updatePassword(Long userId, String password);
+
+    public void delete(Long userId);
 }

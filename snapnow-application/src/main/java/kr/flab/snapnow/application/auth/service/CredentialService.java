@@ -36,4 +36,8 @@ public class CredentialService implements CredentialUseCase {
 
     public void updatePassword(Long userId, String originalPassword, String newPassword) {
     }
+
+    public void delete(Long userId) {
+        credentialOutputPort.delete(userId);
+    }
 }

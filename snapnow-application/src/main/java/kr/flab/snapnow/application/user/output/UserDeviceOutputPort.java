@@ -13,4 +13,6 @@ public interface UserDeviceOutputPort {
     int count(String deviceId);
 
     void delete(Long userId, String deviceId);
+
+    void deleteAll(Long userId);
 }
