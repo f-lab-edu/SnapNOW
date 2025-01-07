@@ -39,9 +39,17 @@ public class Follow {
         this.followNotification = followNotification;
     }
 
+    public void updateFollowStatus(FollowStatus followStatus) {
+        if (followStatus == null) {
+            throw new IllegalArgumentException("Follow status cannot be null");
+        }
+        this.followStatus = followStatus;
+    }
+
     public void updateFollowNotification(FollowNotification followNotification) {
         if (followStatus != FollowStatus.FOLLOWING) {
-            return;
+            throw new IllegalArgumentException(
+                "Cannot update follow notification for non-following user");
         }
         if (followNotification == null) {
             followNotification = FollowNotification.getDefault();
