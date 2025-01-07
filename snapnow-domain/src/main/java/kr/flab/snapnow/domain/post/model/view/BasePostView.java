@@ -1,4 +1,4 @@
-package kr.flab.snapnow.domain.post.viewModel;
+package kr.flab.snapnow.domain.post.model.view;
 
 import java.time.LocalDateTime;
 
@@ -10,18 +10,19 @@ import kr.flab.snapnow.domain.user.model.userProfile.UserProfile;
 @Getter
 public abstract class BasePostView {
 
-    Long postId;
+    protected Long postId;
 
-    UserProfile userProfile;
+    protected UserProfile userProfile;
 
-    int likeCount;
-    int commentCount;
-    String content;
-    Carousel carousel;
-    LocalDateTime createdAt;
+    protected int likeCount;
+    protected int commentCount;
+    protected String content;
+    protected Carousel carousel;
+    protected LocalDateTime createdAt;
+    protected LocalDateTime updatedAt;
 
-    boolean isHideCount;
-    boolean isForbiddenComment;
+    protected boolean isHideCount;
+    protected boolean isForbiddenComment;
 
     protected BasePostView(
             Long postId,
@@ -31,6 +32,7 @@ public abstract class BasePostView {
             String content,
             Carousel carousel,
             LocalDateTime createdAt,
+            LocalDateTime updatedAt,
             boolean isHideCount,
             boolean isForbiddenComment) {
         this.postId = postId;
@@ -40,11 +42,15 @@ public abstract class BasePostView {
         this.content = content;
         this.carousel = carousel;
         this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
         this.isHideCount = isHideCount;
         this.isForbiddenComment = isForbiddenComment;
 
         if (isHideCount) {
             this.likeCount = 0;
+            this.commentCount = 0;
+        }
+        if (isForbiddenComment) {
             this.commentCount = 0;
         }
     }

@@ -1,16 +1,19 @@
-package kr.flab.snapnow.domain.post.viewModel;
+package kr.flab.snapnow.domain.post.model.view;
 
 import java.time.LocalDateTime;
 
+import lombok.Builder;
 import lombok.Getter;
 
 import kr.flab.snapnow.domain.post.model.Carousel;
 import kr.flab.snapnow.domain.user.model.userProfile.UserProfile;
 
 @Getter
+@Builder
 public class DefaultPostView extends BasePostView {
-    
-    public DefaultPostView(
+
+    @Builder
+    private DefaultPostView(
         Long postId,
         UserProfile userProfile,
         int likeCount,
@@ -18,6 +21,7 @@ public class DefaultPostView extends BasePostView {
         String content,
         Carousel carousel,
         LocalDateTime createdAt,
+        LocalDateTime updatedAt,
         boolean isHideCount,
         boolean isForbiddenComment) {
         super(postId,
@@ -27,6 +31,7 @@ public class DefaultPostView extends BasePostView {
             content,
             carousel,
             createdAt,
+            updatedAt,
             isHideCount,
             isForbiddenComment);
     }

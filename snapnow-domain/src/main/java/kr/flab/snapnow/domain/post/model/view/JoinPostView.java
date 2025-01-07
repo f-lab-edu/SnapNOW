@@ -1,8 +1,9 @@
-package kr.flab.snapnow.domain.post.viewModel;
+package kr.flab.snapnow.domain.post.model.view;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+import lombok.Builder;
 import lombok.Getter;
 
 import kr.flab.snapnow.domain.post.model.Carousel;
@@ -11,12 +12,13 @@ import kr.flab.snapnow.domain.user.model.userProfile.UserProfile;
 @Getter
 public class JoinPostView extends BasePostView {
 
-    int joinCount;
-    List<UserProfile> joinUsersUpToFive;
+    private int joinCount;
+    private List<UserProfile> joinUsersUpToFive;
 
-    LocalDateTime expiredAt;
+    private LocalDateTime expiredAt;
 
-    public JoinPostView(
+    @Builder
+    private JoinPostView(
         Long postId,
         UserProfile userProfile,
         int likeCount,
@@ -24,6 +26,7 @@ public class JoinPostView extends BasePostView {
         String content,
         Carousel carousel,
         LocalDateTime createdAt,
+        LocalDateTime updatedAt,
         boolean isHideCount,
         boolean isForbiddenComment,
         List<UserProfile> joinUsersUpToFive,
@@ -36,6 +39,7 @@ public class JoinPostView extends BasePostView {
             content,
             carousel,
             createdAt,
+            updatedAt,
             isHideCount,
             isForbiddenComment);
         this.joinUsersUpToFive = joinUsersUpToFive;

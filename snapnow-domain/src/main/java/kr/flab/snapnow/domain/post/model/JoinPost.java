@@ -4,16 +4,18 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import lombok.Builder;
+import lombok.Getter;
 
 import kr.flab.snapnow.domain.post.enums.CarouselImageType;
 
 @Builder
+@Getter
 public class JoinPost extends BasePost {
 
-    Long joinId;
-    Long hostUserId;
+    private Long joinId;
+    private Long hostUserId;
 
-    LocalDateTime expiredAt;
+    private LocalDateTime expiredAt;
 
     @Builder
     private JoinPost(
