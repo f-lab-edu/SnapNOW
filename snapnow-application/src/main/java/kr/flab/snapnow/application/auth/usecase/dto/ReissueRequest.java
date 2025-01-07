@@ -7,6 +7,7 @@ import lombok.Builder;
 @Builder
 public class ReissueRequest {
 
+    private String accessToken;
     private String refreshToken;
     private String deviceId;
 }
