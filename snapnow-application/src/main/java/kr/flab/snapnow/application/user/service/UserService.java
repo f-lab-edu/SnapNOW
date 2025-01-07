@@ -13,9 +13,13 @@ import kr.flab.snapnow.domain.auth.Token;
 import kr.flab.snapnow.domain.auth.DeviceCredential;
 import kr.flab.snapnow.domain.auth.exception.WrongPasswordException;
 import kr.flab.snapnow.domain.user.enums.account.AuthProvider;
-import kr.flab.snapnow.domain.user.model.User;
-import kr.flab.snapnow.domain.user.model.userAccount.credential.*;
+import kr.flab.snapnow.domain.user.model.userAccount.credential.Email;
+import kr.flab.snapnow.domain.user.model.userAccount.credential.UserCredential;
+import kr.flab.snapnow.domain.user.model.userAccount.credential.EmailCredential;
+import kr.flab.snapnow.domain.user.model.userAccount.credential.OAuthCredential;
+import kr.flab.snapnow.domain.user.model.userProfile.UserProfile;
 import kr.flab.snapnow.domain.user.model.userDevice.Device;
+import kr.flab.snapnow.application.user.usecase.dto.UserCreateDto;
 import kr.flab.snapnow.application.user.usecase.DeleteIdUseCase;
 import kr.flab.snapnow.application.user.usecase.SignUpUseCase;
 import kr.flab.snapnow.application.user.output.UserOutputPort;
@@ -30,33 +34,25 @@ import kr.flab.snapnow.application.email.service.EmailService;
 @RequiredArgsConstructor
 public class UserService implements SignUpUseCase, DeleteIdUseCase {
 
-    private final AuthService authService;
+    private final UserDeviceService userDeviceService;
     private final CredentialService credentialService;
-    private final DeviceCredentialService deviceCredentialService;
+    private final UserProfileService userProfileService;
+    private final UserInfoService userInfoService;
+    private final UserSettingService userSettingService;
+    private final AuthService authService;
     private final EmailService emailService;
     private final UserOutputPort userOutputPort;
 
-    public Token signUp(User user) {
-        Email email = user.getAccount().getCredential().getEmail();
+    public Token signUp(UserCreateDto userCreateDto) {
+        Email email = userCreateDto.getCredential().getEmail();
+
         if (!emailService.isSuccess(
-                email, VerificationType.SIGNUP)) {
+            email, VerificationType.SIGNUP)) {
             throw new ForbiddenException("Email verification is needed before signing up");
         }
 
-        userOutputPort.insert(user);
-        UserCredential userCredential = credentialService.get(email);
-
-        Device device = user.getUserDevice().getDevices().get(0);
-        DeviceCredential deviceCredential = DeviceCredential.builder()
-                .userId(userCredential.getUserId())
-                .deviceId(device.getDeviceId())
-                .build();
-        deviceCredentialService.insert(deviceCredential);
-
-        return authService.signIn(
-                email,
-                ((EmailCredential) user.getAccount().getCredential()).getPassword(),
-                device.getDeviceId());
+        Long userId = createUser(userCreateDto);
+        return authService.signIn(userId, userCreateDto.getDevice().getDeviceId());
     }
 
     public void deleteEmailUser(Long userId, String password, String deleteReason) {
@@ -86,15 +82,29 @@ public class UserService implements SignUpUseCase, DeleteIdUseCase {
         delete(userId, deleteReason);
     }
 
-    private void delete(Long userId, String deleteReason) {
-        // TODO: UserCredential, UserDevice, UserSetting, UserProfile, UserAccount 모두 삭제
-        // TODO: follow, post 비동기 삭제
-        List<DeviceCredential> deviceCredentials = deviceCredentialService.getAll(userId);
+    @Transactional
+    private Long createUser(UserCreateDto userCreateDto) {
+        Long userId = userOutputPort.insert();
+        Device device = userCreateDto.getDevice();
+        UserCredential userCredential = userCreateDto.getCredential();
+        UserProfile userProfile = userCreateDto.getProfile();
 
-        for (DeviceCredential deviceCredential : deviceCredentials) {
-            deviceCredentialService.delete(userId, deviceCredential.getDeviceId());
-        }
+        credentialService.insert(userCredential);
+        userProfileService.insert(userProfile);
+        userDeviceService.insert(userId, device);
+        userInfoService.insert(userId);
+        userSettingService.insert(userId);
+
+        return userId;
+    }
+
+    @Transactional
+    private void delete(Long userId, String deleteReason) {
+        credentialService.delete(userId);
+        userProfileService.delete(userId);
+        userDeviceService.deleteAll(userId);
+        userInfoService.delete(userId);
+        userSettingService.delete(userId);
         userOutputPort.delete(userId, deleteReason);
     }
 }
-
