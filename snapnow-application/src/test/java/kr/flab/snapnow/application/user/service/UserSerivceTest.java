@@ -87,12 +87,16 @@ public class UserSerivceTest {
         String password = "password";
         EmailCredential credential = UserFixture.createEmailCredential();
 
-        System.out.println("credential.getAuthProvider(): " + credential.getAuthProvider());
         when(credentialService.getCredential(userId)).thenReturn(credential);
         when(credentialService.isPasswordMatch(userId, password)).thenReturn(true);
 
         // when & then
         userService.deleteEmailUser(userId, password, null);
+        verify(credentialService).delete(userId);
+        verify(userProfileService).delete(userId);
+        verify(userDeviceService).deleteAll(userId);
+        verify(userInfoService).delete(userId);
+        verify(userSettingService).delete(userId);
         verify(userOutputPort).delete(userId, null);
     }
     
@@ -109,6 +113,11 @@ public class UserSerivceTest {
 
         // when & then
         userService.deleteOAuthUser(userId, deleteReason);
+        verify(credentialService).delete(userId);
+        verify(userProfileService).delete(userId);
+        verify(userDeviceService).deleteAll(userId);
+        verify(userInfoService).delete(userId);
+        verify(userSettingService).delete(userId);
         verify(userOutputPort).delete(userId, deleteReason);
     }
 }
