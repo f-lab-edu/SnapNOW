@@ -1,14 +1,18 @@
 package kr.flab.snapnow.application.auth.usecase;
 
 import kr.flab.snapnow.domain.auth.Token;
-import kr.flab.snapnow.domain.user.model.userAccount.credential.Email;
+import kr.flab.snapnow.application.auth.usecase.dto.EmailSignInRequest;
+import kr.flab.snapnow.application.auth.usecase.dto.OAuthSignInRequest;
+import kr.flab.snapnow.application.auth.usecase.dto.ReissueRequest;
+import kr.flab.snapnow.application.auth.usecase.dto.SignOutRequest;
 
 public interface AuthUseCase {
 
-    Token signIn(Email email, String password, String deviceId);
+    Token signIn(EmailSignInRequest request);
 
-    Token reissue(Token token);
+    Token signIn(OAuthSignInRequest request);
 
-    void signOut(Long userId, String deviceId);
+    Token reissue(ReissueRequest request);
+
+    void signOut(SignOutRequest request);
 }
-
