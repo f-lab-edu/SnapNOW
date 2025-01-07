@@ -15,6 +15,8 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserInfo {
 
+    private Long userId;
+
     private String name;
     private LocalDate birthDay;
     private String phoneNumber;
