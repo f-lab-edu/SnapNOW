@@ -32,9 +32,10 @@ public class TokenPayload {
     }
 
     public void setExpiredAt(Date expiredAt) {
-        if (this.expiredAt == null) {
-            this.expiredAt = expiredAt;
+        if (this.expiredAt != null) {
+            throw new IllegalArgumentException("Token's expiredAt only can be set once");
         }
+        this.expiredAt = expiredAt;
     }
 
     @Override
