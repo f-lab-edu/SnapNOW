@@ -11,6 +11,8 @@ import kr.flab.snapnow.domain.auth.exception.WrongPasswordException;
 import kr.flab.snapnow.domain.user.enums.account.AuthProvider;
 import kr.flab.snapnow.domain.user.model.userAccount.credential.Email;
 import kr.flab.snapnow.domain.user.model.userAccount.credential.UserCredential;
+import kr.flab.snapnow.domain.user.model.userAccount.credential.EmailCredential;
+import kr.flab.snapnow.domain.user.model.userAccount.credential.OAuthCredential;
 import kr.flab.snapnow.domain.user.model.userProfile.UserProfile;
 import kr.flab.snapnow.domain.user.model.userDevice.Device;
 import kr.flab.snapnow.application.user.usecase.dto.UserCreateDto;
@@ -21,7 +23,6 @@ import kr.flab.snapnow.application.auth.service.AuthService;
 import kr.flab.snapnow.application.auth.service.CredentialService;
 import kr.flab.snapnow.application.email.VerificationType;
 import kr.flab.snapnow.application.email.service.EmailService;
-import kr.flab.snapnow.application.auth.usecase.dto.IssueRequest;
 
 @Service
 @RequiredArgsConstructor
@@ -45,10 +46,7 @@ public class UserService implements SignUpUseCase, DeleteIdUseCase {
         }
 
         Long userId = createUser(userCreateDto);
-        return authService.issue(IssueRequest.builder()
-            .userId(userId)
-            .deviceId(userCreateDto.getDevice().getDeviceId())
-            .build());
+        return authService.signIn(userId, userCreateDto.getDevice().getDeviceId());
     }
 
     public void deleteEmailUser(Long userId, String password, String deleteReason) {
