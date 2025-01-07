@@ -1,10 +1,10 @@
 package kr.flab.snapnow.application.user.service;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.InjectMocks;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
@@ -13,15 +13,17 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import kr.flab.snapnow.core.exception.ForbiddenException;
 import kr.flab.snapnow.domain.auth.Token;
-import kr.flab.snapnow.domain.user.model.User;
 import kr.flab.snapnow.domain.user.model.userAccount.credential.*;
 import kr.flab.snapnow.application.auth.service.*;
 import kr.flab.snapnow.application.user.fixture.UserFixture;
 import kr.flab.snapnow.application.user.output.UserOutputPort;
+import kr.flab.snapnow.application.user.usecase.dto.UserCreateDto;
 import kr.flab.snapnow.application.email.VerificationType;
 import kr.flab.snapnow.application.email.service.EmailService;
+import kr.flab.snapnow.application.auth.usecase.dto.IssueRequest;
 
-public class UserSerivceT {
+@ExtendWith(MockitoExtension.class)
+public class UserSerivceTest {
 
     @Mock
     private AuthService authService;
@@ -31,37 +33,47 @@ public class UserSerivceT {
     private EmailService emailService;
     @Mock
     private UserOutputPort userOutputPort;
+    @Mock
+    private UserProfileService userProfileService;
+    @Mock
+    private UserInfoService userInfoService;
+    @Mock
+    private UserSettingService userSettingService;
+    @Mock
+    private UserDeviceService userDeviceService;
     @InjectMocks
     private UserService userService;
-
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
     public void signUp() {
         // given
-        User user = UserFixture.createUser();
+        Long userId = 1L;
+        UserCreateDto user = UserFixture.createUserCreateDto();
         when(emailService.isSuccess(
-            user.getAccount().getCredential().getEmail(),
-            VerificationType.SIGNUP)).thenReturn(true);
-        when(authService.signIn(
-                user.getAccount().getCredential().getEmail(),
-                ((EmailCredential) user.getAccount().getCredential()).getPassword(),
-                user.getUserDevice().getDevices().get(0).getDeviceId()))
-            .thenReturn(new Token("accessToken", "refreshToken"));
+            user.getCredential().getEmail(),
+                VerificationType.SIGNUP)).thenReturn(true);
+        when(userOutputPort.insert()).thenReturn(userId);
+        when(authService.issue(
+            IssueRequest.builder()
+                .userId(userId)
+                .deviceId(user.getDevice().getDeviceId())
+                .build()))
+            .thenReturn(new Token("accessToken" + userId, "refreshToken" + userId));
 
         // when & then
-        assertEquals(userService.signUp(user), new Token("accessToken", "refreshToken"));
-        verify(userOutputPort).insert(user);
+        assertEquals(userService.signUp(user), new Token("accessToken" + userId, "refreshToken" + userId));
+        verify(credentialService).insert(user.getCredential());
+        verify(userProfileService).insert(user.getProfile());
+        verify(userDeviceService).insert(userId, user.getDevice());
+        verify(userInfoService).insert(userId);
+        verify(userSettingService).insert(userId);
     }
 
     @Test
     public void failSignUpEmailNotVerified() {
         // given
-        User user = UserFixture.createUser();
-        when(emailService.isSuccess(user.getAccount().getCredential().getEmail(),
+        UserCreateDto user = UserFixture.createUserCreateDto();
+        when(emailService.isSuccess(user.getCredential().getEmail(),
                 VerificationType.SIGNUP)).thenReturn(false);
 
         // when & then
@@ -75,11 +87,16 @@ public class UserSerivceT {
         String password = "password";
         EmailCredential credential = UserFixture.createEmailCredential();
 
-        when(credentialService.get(userId)).thenReturn(credential);
+        when(credentialService.getCredential(userId)).thenReturn(credential);
         when(credentialService.isPasswordMatch(userId, password)).thenReturn(true);
 
         // when & then
         userService.deleteEmailUser(userId, password, null);
+        verify(credentialService).delete(userId);
+        verify(userProfileService).delete(userId);
+        verify(userDeviceService).deleteAll(userId);
+        verify(userInfoService).delete(userId);
+        verify(userSettingService).delete(userId);
         verify(userOutputPort).delete(userId, null);
     }
     
@@ -90,12 +107,17 @@ public class UserSerivceT {
         String deleteReason = "test";
         OAuthCredential credential = UserFixture.createOAuthCredential();
 
-        when(credentialService.get(userId)).thenReturn(credential);
+        when(credentialService.getCredential(userId)).thenReturn(credential);
         when(emailService.isSuccess(credential.getEmail(), VerificationType.DELETE_ID))
             .thenReturn(true);
 
         // when & then
         userService.deleteOAuthUser(userId, deleteReason);
+        verify(credentialService).delete(userId);
+        verify(userProfileService).delete(userId);
+        verify(userDeviceService).deleteAll(userId);
+        verify(userInfoService).delete(userId);
+        verify(userSettingService).delete(userId);
         verify(userOutputPort).delete(userId, deleteReason);
     }
 }

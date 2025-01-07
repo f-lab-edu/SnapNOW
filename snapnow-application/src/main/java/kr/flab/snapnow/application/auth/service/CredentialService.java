@@ -3,6 +3,7 @@ package kr.flab.snapnow.application.auth.service;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.flab.snapnow.application.auth.output.CredentialOutputPort;
 import kr.flab.snapnow.application.auth.usecase.GetCredentialUseCase;
@@ -13,10 +14,16 @@ import kr.flab.snapnow.domain.user.model.userAccount.credential.UserCredential;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class CredentialService implements GetCredentialUseCase, UpdatePasswordUseCase {
 
     private final CredentialOutputPort credentialOutputPort;
     private final PasswordService passwordService;
+
+    @Transactional
+    public void insert(UserCredential userCredential) {
+        credentialOutputPort.insert(userCredential);
+    }
 
     public UserCredential get(Long userId) {
         return credentialOutputPort.get(userId);
@@ -43,5 +50,9 @@ public class CredentialService implements GetCredentialUseCase, UpdatePasswordUs
 
         passwordService.updatePassword(userCredential, newPassword);
         credentialOutputPort.updatePassword(userId, newPassword);
+    }
+
+    public void delete(Long userId) {
+        credentialOutputPort.delete(userId);
     }
 }
